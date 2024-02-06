@@ -1,6 +1,8 @@
 'use client'
-
+import { Inter } from 'next/font/google'
 import createTheme from "@mui/material/styles/createTheme";
+
+const inter = Inter({ subsets: ['latin'] });
 
 export const Theme = createTheme({
 
@@ -23,6 +25,10 @@ export const Theme = createTheme({
             secondary: 'rgba(11, 35, 65, 0.6)',
             disabled: 'rgba(11, 35, 65, 0.38)',
         },
+    },
+
+    typography: {
+        fontFamily: inter.style.fontFamily,
     },
 
 });
