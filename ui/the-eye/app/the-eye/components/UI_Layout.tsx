@@ -31,12 +31,22 @@ export default function UI_Layout({ width }: { width: number }) {
     };
 
     return (
-        <Box sx={{ display: 'flex' }}>
+        <>
         
-            <AppBar component='header' position='relative'>
+            <AppBar
+                component='header'
+                position='fixed'
+                sx = {{
+                    width: { lg: `calc(100% - ${drawerWidth}px)` },
+                    ml: { lg: `${drawerWidth}px` },
+                }}
+            >
                 
                 <Toolbar>
-                    <IconButton onClick={ handleDrawerToggle }>
+                    <IconButton
+                        onClick = { handleDrawerToggle }
+                        sx = {{ mr: 2, display: { lg: 'none' } }}
+                    >
                         <MenuIcon />
                     </IconButton>
                 </Toolbar>
@@ -45,7 +55,7 @@ export default function UI_Layout({ width }: { width: number }) {
         
             <Box
                 component='nav'
-                sx={{ width: { lg: drawerWidth }}}
+                sx={{ width: { lg: drawerWidth }, flexShrink: { lg: 0 }}}
             >
                 <MobileSideBar
                     open={mobileOpen}
@@ -58,6 +68,6 @@ export default function UI_Layout({ width }: { width: number }) {
             
             </Box>
         
-        </Box>
+        </>
     );
 }
