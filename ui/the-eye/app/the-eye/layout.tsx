@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import UI_Layout from "./components/UI_Layout";
-import { Toolbar } from "@mui/material";
+import Toolbar from "@mui/material/Toolbar";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     const sidebar_width: number = 240;
