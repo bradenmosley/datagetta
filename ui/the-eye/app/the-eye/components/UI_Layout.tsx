@@ -1,12 +1,9 @@
 'use client'
 
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import Toolbar from '@mui/material/Toolbar';
 
+import TopBar from './TopBar';
 import MobileSideBar from './MobileSideBar';
 import DesktopSideBar from './DesktopSideBar';
 
@@ -32,26 +29,8 @@ export default function UI_Layout({ width }: { width: number }) {
 
     return (
         <>
-        
-            <AppBar
-                component='header'
-                position='fixed'
-                sx = {{
-                    width: { lg: `calc(100% - ${drawerWidth}px)` },
-                    ml: { lg: `${drawerWidth}px` },
-                }}
-            >
-                
-                <Toolbar>
-                    <IconButton
-                        onClick = { handleDrawerToggle }
-                        sx = {{ mr: 2, display: { lg: 'none' } }}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                </Toolbar>
-            
-            </AppBar>
+
+            <TopBar drawerToggle={ handleDrawerToggle } width={drawerWidth}/>
         
             <Box
                 component='nav'

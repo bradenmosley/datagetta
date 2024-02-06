@@ -2,7 +2,7 @@
 
 import createTheme from "@mui/material/styles/createTheme";
 
-export const DataGettaTheme = createTheme({
+export const Theme = createTheme({
 
     palette: {
         primary: {
@@ -16,6 +16,12 @@ export const DataGettaTheme = createTheme({
             light: '#ea711a',
             dark: '#cc4e0b',
             contrastText: '#fff',
+        },
+
+        text: {
+            primary: 'rgba(11, 35, 65, 1)',
+            secondary: 'rgba(11, 35, 65, 0.6)',
+            disabled: 'rgba(11, 35, 65, 0.38)',
         },
     },
 

@@ -1,5 +1,7 @@
 import Drawer from '@mui/material/Drawer';
-import Tabs from './Tabs'
+import Tabs from './Tabs';
+import { Theme } from '@/app/theme';
+import { common } from '@mui/material/colors';
 
 export default function MobileSideBar({ open, onTransitionEnd, onClose, width}: 
     {open: boolean, onTransitionEnd: any, onClose: any, width: number}) {
@@ -12,7 +14,12 @@ export default function MobileSideBar({ open, onTransitionEnd, onClose, width}:
             ModalProps={{ keepMounted: true }}
             sx={{
                 display: { xs: 'block', lg: 'none' },
-                '& .MuiDrawer-paper': { boxSizing: 'border-box', width: width },
+                '& .MuiDrawer-paper': {
+                    boxSizing: 'border-box',
+                    width: width,
+                    backgroundColor: Theme.palette.primary.main,
+                    color: common.white,
+                },
             }}
             >
             <Tabs />
