@@ -1,0 +1,124 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+
+Table players {
+ player_id integer [primary key]
+ player_name varchar
+ team_name varchar
+ position varchar
+}
+
+
+//all stats from Trumedia
+Table player_statistics {
+ player_id integer [primary key]
+ games_played integer
+ pitches integer
+ plate_appearances integer
+ at_bats integer
+ batting_average decimal
+ on_base_percentage decimal
+ slugging_percentage decimal
+ ops_batting decimal
+ isolated_power_batting decimal
+ strikeouts_per_pa decimal
+ walks_per_pa decimal
+ strikeout_to_walk_ratio decimal
+ hr_per_pa decimal
+ runs_scored_per_game decimal
+ ab_per_hr decimal
+ batting_average_on_balls_in_play decimal
+ out_rate_on_balls_in_play decimal
+ weighted_on_base_average decimal
+ stolen_base_success_rate decimal
+}
+
+
+Table teams {
+ team_name varchar [primary key]
+ conference varchar
+ number_wins integer   //from trumedia
+ number_losses integer //from trumedia
+ win_percent decimal   //from trumedia
+}
+
+
+Table conferences {
+ conference varchar
+}
+
+
+//mapped 26 of ~180 columns
+Table trackman_data {
+ pitch_uuid integer [primary key]
+ pitchNo integer
+ pitch_date date
+ pitch_time time
+ PAofInning integer
+ pitchofPA integer
+ pitcher varchar
+ pitcherID integer
+ pitcherThrows varchar
+ pitcherTeam varchar
+ batter varchar
+ batterID integer
+ batterSide varchar
+ batterTeam varchar
+ pitcherSet varchar
+ inning integer
+ top_bottom varchar
+ outs integer
+ balls integer
+ strikes integer
+ taggedPitch varchar
+ autoPitch varchar
+ pitchCall varchar
+ KorBB varchar
+ taggedHit varchar
+ playResult varchar
+ outsOnPlay integer
+ catcher varchar
+ about_150_columns_left varchar
+}
+
+//talk to Adam about what we want to keep
+Table trackman_revised_data {
+ example_column varchar [primary key]
+}
+
+
+Table seasons {
+ season_title varchar
+ start_date date
+ end_date date
+}
+
+
+//mapped completely
+Table pitcher_normative_data {
+ Pitcher varchar
+ MappedPitch varchar
+ RelSpeed decimal
+ VertRelAngle decimal
+ HorzRelAngle decimal
+ SpinRate decimal
+ SpinAxis decimal
+ RelHeight decimal
+ RelSide decimal
+ Extension decimal
+ VertBreak decimal
+ InducedVertBreak decimal
+ HorzBreak decimal
+ VertApprAngle decimal
+ HorzApprAngle decimal
+}
+
+
+Ref: players.team_name > teams.team_name
+Ref: teams.conference > conferences.conference
+Ref: players.player_id - player_statistics.player_id
+Ref: pitcher_normative_data.Pitcher >  players.player_name
+Ref: trackman_data.pitcher >  players.player_name
+Ref: trackman_data.batter >  players.player_name
+Ref: trackman_data.catcher >  players.player_name
