@@ -3,7 +3,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import PersonIcon from '@mui/icons-material/Person';
+import GroupsIcon from '@mui/icons-material/Groups';
 import UploadIcon from '@mui/icons-material/Upload';
 import { common } from "@mui/material/colors";
 
@@ -37,7 +37,7 @@ export default function Tabs() {
             <ListItem disablePadding>
                 <ListItemButton sx = {{ display: 'flex', gap: 2 }}>
                     <ListItemIcon sx = {{ minWidth: 'auto' }}>
-                        <PersonIcon sx = {{ color: common.white }}/>
+                        <GroupsIcon sx = {{ color: common.white }}/>
                     </ListItemIcon>
                     <ListItemText sx = {{ '& .MuiTypography-root': { fontWeight: 'bold' } }}>Teams</ListItemText>
                 </ListItemButton>

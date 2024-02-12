@@ -36,6 +36,7 @@ export default function DesktopSideBar({ width }: { width: number }) {
                     width = { 134 }
                     height = { 200 }
                     alt = 'logo of a tiger eye'
+                    priority = { true }
                 />
                 <Tabs />
             </Box>

@@ -11,12 +11,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
             <Box
                 component='main'
-                sx = {{ flexGrow: 1,
-                        pl: 3,
-                        pr: 3,
-                        width: { lg: `calc(100% - ${sidebar_width}px)` } }}
+                sx={{
+                    flexGrow: 1,
+                    p: 8,
+                    width: { lg: `calc(100% - ${sidebar_width}px)` }
+                }}
             >
-                <Toolbar />
                 { children }
             </Box>
         </Box>
