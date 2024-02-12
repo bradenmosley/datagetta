@@ -19,6 +19,7 @@ export default function MobileSideBar({ open, onTransitionEnd, onClose, width}:
                     width: width,
                     backgroundColor: Theme.palette.primary.main,
                     color: common.white,
+                    paddingTop: 8,
                 },
             }}
             >
