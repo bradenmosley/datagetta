@@ -22,6 +22,8 @@ services:
         - ./backups:/backups
       env_file:
         - db.env
+      networks:
+         - datagetta_net
 
 networks:
    datagetta_net:
