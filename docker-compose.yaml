@@ -15,6 +15,13 @@ services:
          npm ci
          npm run build
          npm run start
+   postgres:
+      image: postgres:16
+      container_name: postgres
+      volumes:
+        - ./backups:/backups
+      env_file:
+        - db.env
 
 networks:
    datagetta_net:
