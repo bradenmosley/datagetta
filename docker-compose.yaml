@@ -9,6 +9,8 @@ services:
       networks:
          - datagetta_net
       working_dir: /next-app
+      depends_on:
+        - postgres
       entrypoint: ["/bin/sh","-c"]
       command:
       - |
