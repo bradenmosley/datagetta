@@ -1,0 +1,21 @@
+services:
+   next:
+      image: node:21
+      container_name: next
+      volumes:
+        - ./ui/the-eye:/next-app
+      ports:
+        - "80:3000"
+      networks:
+         - datagetta_net
+      working_dir: /next-app
+      entrypoint: ["/bin/sh","-c"]
+      command:
+      - |
+         npm ci
+         npm run build
+         npm run start
+
+networks:
+   datagetta_net:
+      driver: bridge
