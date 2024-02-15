@@ -10,30 +10,20 @@ Table players {
 }
 
 
-//all stats from Trumedia
+//all stats from coach Teaford
 Table player_statistics {
- player_id integer [primary key]
- games_played integer
- pitches integer
- plate_appearances integer
- at_bats integer
- batting_average decimal
- on_base_percentage decimal
- slugging_percentage decimal
- ops_batting decimal
- isolated_power_batting decimal
- strikeouts_per_pa decimal
- walks_per_pa decimal
- strikeout_to_walk_ratio decimal
- hr_per_pa decimal
- runs_scored_per_game decimal
- ab_per_hr decimal
- batting_average_on_balls_in_play decimal
- out_rate_on_balls_in_play decimal
- weighted_on_base_average decimal
- stolen_base_success_rate decimal
+  player_id integer [primary key]
+  at_bats integer
+  batting_average decimal
+  on_base_percentage decimal
+  slugging_percentage decimal
+  ops decimal
+  isolated_power decimal
+  k_percentage decimal
+  base_on_ball_percentage decimal
+  in_zone_whiff_percentage decimal
+  chase_percentage decimal
 }
-
 
 Table teams {
  team_name varchar [primary key]
