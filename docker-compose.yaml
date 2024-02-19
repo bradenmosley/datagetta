@@ -2,6 +2,8 @@ services:
    next:
       image: node:21
       container_name: next
+      env_file:
+        - next.env
       volumes:
         - ./ui/the-eye:/next-app
       ports:
