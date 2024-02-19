@@ -18,6 +18,7 @@ services:
       - |
          npm ci
          npx prisma migrate dev
+         npx prisma migrate deploy
          npm run build
          npm run start
    postgres:
