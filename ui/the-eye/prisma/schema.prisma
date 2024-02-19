@@ -11,38 +11,38 @@ datasource db {
 }
 
 model player {
-  id        String      @id @default(uuid())
-  name      String
-  team team             @relation(fields: [team_name], references: [team_name])
-  team_name String
-  at_bats   Int
-  batting_average Float
-  on_base_percentage Float
-  slugging_percentage Float
-  ops Float
-  isolated_power Float
-  k_percentage Float
+  id                       String @id @default(uuid())
+  name                     String
+  team                     team   @relation(fields: [team_name], references: [team_name])
+  team_name                String
+  at_bats                  Int
+  batting_average          Float
+  on_base_percentage       Float
+  slugging_percentage      Float
+  ops                      Float
+  isolated_power           Float
+  k_percentage             Float
   base_on_balls_percentage Float
   in_zone_whiff_percentage Float
-  chase_percentage Float
+  chase_percentage         Float
 }
 
 model team {
-  team_name String @id
-  conference conference @relation(fields: [conference_name], references: [conference_name])
+  team_name       String     @id
+  conference      conference @relation(fields: [conference_name], references: [conference_name])
   conference_name String
-  number_wins Int
-  number_losses Int
-  players player[]
+  number_wins     Int
+  number_losses   Int
+  players         player[]
 }
 
 model conference {
   conference_name String @id
-  teams team[]
+  teams           team[]
 }
 
 model seasons {
-  season_name String @id
-  start_date DateTime
-  end_date DateTime
+  season_name String   @id
+  start_date  DateTime
+  end_date    DateTime
 }
