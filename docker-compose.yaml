@@ -26,6 +26,7 @@ services:
       container_name: postgres
       volumes:
         - ./backups:/backups
+        - ./data:/var/lib/postgresql/data
       env_file:
         - db.env
       networks:
