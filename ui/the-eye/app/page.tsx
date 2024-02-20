@@ -1,8 +1,13 @@
+'use client'
+
+import Lottie from "lottie-react";
+import animation from '../public/LandingPage.json'
+
+const style = {
+  height: `100vh`,
+  backgroundColor: `#000`,
+}
+
 export default function Home() {
-  return (
-    <div>
-      <h1>THE EYE</h1>
-      <p>A DATTA GETTA PRODUCT</p>
-    </div>
-  );
+  return <Lottie animationData={animation} style={style}/>;
 }

@@ -14,6 +14,7 @@ export const prisma =
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma
 // ---
 
+// Not sure if needed??
 async function main() {
   // ... you will write your Prisma Client queries here
 }
@@ -27,3 +28,4 @@ main()
     await prisma.$disconnect()
     process.exit(1)
   })
+// ---
