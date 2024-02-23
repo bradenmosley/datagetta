@@ -19,7 +19,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <Toolbar></Toolbar>
                 <Box
                     sx={{
-                        p: 8,
+                        paddingX: 8,
+                        paddingY: 4,
                     }}
                 >
                     { children }

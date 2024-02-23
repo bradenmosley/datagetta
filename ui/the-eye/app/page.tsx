@@ -1,13 +1,20 @@
 'use client'
 
-import Lottie from "lottie-react";
+import { Player } from '@lottiefiles/react-lottie-player';
 import animation from '../public/LandingPage.json'
 
-const style = {
-  height: `100vh`,
-  backgroundColor: `#000`,
-}
+export default function LandingPage() {
+  // return (
+  //   <Player
+  //   autoplay
+  //   loop
+  //   src = { animation }
+  //   style = {{ height: '100vh', width: 'auto' }}
+  //   >
+  //   </Player>
+  // );
 
-export default function Home() {
-  return <Lottie animationData={animation} style={style}/>;
+  return (
+    <h1>DATA GETTA</h1>
+  );
 }
