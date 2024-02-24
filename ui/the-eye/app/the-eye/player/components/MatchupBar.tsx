@@ -11,7 +11,6 @@ const players = [
 
 export default function MatchupBar() {
     return (
-    
         <Autocomplete
             freeSolo
             disableClearable
@@ -28,5 +27,4 @@ export default function MatchupBar() {
             )}
         />
     );
-
 }

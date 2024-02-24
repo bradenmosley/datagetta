@@ -16,7 +16,6 @@ const filters = [
 
 export default function FilterBar() {
     return (
-
         <Autocomplete
             multiple
             options = { filters }
@@ -39,12 +38,7 @@ export default function FilterBar() {
                 '& .MuiChip-root .MuiChip-deleteIcon': {
                     color: common.white,
                 },
-                // '& .MuiOutlinedInput-root': {
-                //     borderRadius: 1000,
-                //     backgroundColor: grey[300],
-                // }
             }}
         />
-
     );
 }

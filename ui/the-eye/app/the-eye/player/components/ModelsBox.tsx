@@ -15,7 +15,6 @@ const imageStyle = {
 
 export default function ModelsBox() {
     return (
-
         <Box
             sx={{
                 display: 'flex',
@@ -40,6 +39,5 @@ export default function ModelsBox() {
                 style = {imageStyle}
             />
         </Box>
-        
     );
 }
