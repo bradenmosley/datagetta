@@ -1,11 +1,7 @@
 import Drawer from '@mui/material/Drawer';
-import Tabs from './Tabs'
-import Box from "@mui/material/Box";
 import { Theme } from '@/app/theme';
 import { common } from '@mui/material/colors';
-
-import Image from 'next/image';
-import logo from './assets/TheEyeLogo.svg'
+import TabGroup from './TabGroup';
 
 export default function DesktopSideBar({ width }: { width: number }) {
     return (
@@ -23,24 +19,7 @@ export default function DesktopSideBar({ width }: { width: number }) {
             }}
             open
         >
-            <Box
-                sx={{ 
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    gap: 4,
-                }}
-            >
-                <Image 
-                    src = {logo}
-                    width = { 134 }
-                    height = { 200 }
-                    alt = 'logo of a tiger eye'
-                    priority = { true }
-                />
-                <Tabs />
-            </Box>
-            
+            <TabGroup />
         </Drawer>
     );
 }

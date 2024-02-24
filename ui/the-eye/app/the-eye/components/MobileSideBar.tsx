@@ -1,10 +1,11 @@
 import Drawer from '@mui/material/Drawer';
-import Tabs from './Tabs';
 import { Theme } from '@/app/theme';
 import { common } from '@mui/material/colors';
+import TabGroup from './TabGroup';
 
 export default function MobileSideBar({ open, onTransitionEnd, onClose, width}: 
     {open: boolean, onTransitionEnd: any, onClose: any, width: number}) {
+    
     return (
         <Drawer
             variant="temporary"
@@ -23,7 +24,7 @@ export default function MobileSideBar({ open, onTransitionEnd, onClose, width}:
                 },
             }}
             >
-            <Tabs />
+            <TabGroup />
         </Drawer>
     );
 }

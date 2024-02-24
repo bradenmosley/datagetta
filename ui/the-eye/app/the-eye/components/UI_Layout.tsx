@@ -29,12 +29,11 @@ export default function UI_Layout({ width }: { width: number }) {
 
     return (
         <>
-
             <TopBar drawerToggle={ handleDrawerToggle } width={drawerWidth}/>
         
             <Box
                 component='nav'
-                sx={{ width: { lg: drawerWidth }, flexShrink: { lg: 0 }}}
+                sx={{ width: { lg: drawerWidth }}}
             >
                 <MobileSideBar
                     open={mobileOpen}
@@ -44,9 +43,7 @@ export default function UI_Layout({ width }: { width: number }) {
                 />
 
                 <DesktopSideBar width={drawerWidth} />
-            
             </Box>
-        
         </>
     );
 }
