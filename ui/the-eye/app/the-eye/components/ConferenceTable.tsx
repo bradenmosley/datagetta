@@ -7,20 +7,11 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
 
-function createData(name: string, season_record: string, conf_record: string) {
-    return { name, season_record, conf_record };
-};
-
-const rows = [
-    createData('Auburn', '10-0', '4-0'),
-    createData('Alabama', '9-0', '4-0'),
-    createData('Vanderbilt', '8-0', '4-0'),
-    createData('LSU', '7-0', '4-0'),
-    createData('Florida', '6-0', '3-0'),
-];
-
-export default function ConferenceTable() {
+export default function ConferenceTable({name, teams}: {name: string, teams: { team_name: string }[]}) {
+    const teamURL : string = '/the-eye/team/';
+    
     return (
         <Paper 
             elevation={3}
@@ -29,7 +20,7 @@ export default function ConferenceTable() {
                 paddingY: 1,
             }}
         >
-            <Typography variant='h6' fontWeight={700} paddingLeft={1.5}>SEC</Typography>
+            <Typography variant='h6' fontWeight={700} paddingLeft={1.5}>{name}</Typography>
 
             <TableContainer>
                 <Table sx={{ minWidth: 300 }}>
@@ -43,14 +34,22 @@ export default function ConferenceTable() {
                     </TableHead>
 
                     <TableBody>
-                        { rows.map((row) => (
+                        { teams.map((team, index) => (
                             <TableRow
-                                key={row.name}
+                                key={index}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
-                                <TableCell component="th" scope="row" sx={{fontWeight: 500}}>{row.name}</TableCell>
-                                <TableCell align='center'>{row.season_record}</TableCell>
-                                <TableCell align='center'>{row.conf_record}</TableCell>
+                                <TableCell component="th" scope="row">
+                                    <Link
+                                        href = {teamURL.concat(team.team_name)}
+                                        color = 'inherit'
+                                        fontWeight={500}
+                                    >
+                                        {team.team_name}
+                                    </Link>
+                                </TableCell>
+                                <TableCell align='center'>N/A</TableCell>
+                                <TableCell align='center'>N/A</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

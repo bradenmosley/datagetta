@@ -21,7 +21,7 @@ export default function Tabs() {
         >
 
             <ListItem disablePadding>
-                <ListItemButton sx = {{ display: 'flex', gap: 2 }} href="https://datagetta.app/the-eye/team/Auburn">
+                <ListItemButton sx = {{ display: 'flex', gap: 2 }} href="/the-eye/team/Auburn">
                     <ListItemIcon sx = {{ minWidth: 'auto' }}>
                         <Image
                             src = {logo}
@@ -35,7 +35,7 @@ export default function Tabs() {
             </ListItem>
 
             <ListItem disablePadding>
-                <ListItemButton sx = {{ display: 'flex', gap: 2 }} href="https://datagetta.app/the-eye">
+                <ListItemButton sx = {{ display: 'flex', gap: 2 }} href="/the-eye">
                     <ListItemIcon sx = {{ minWidth: 'auto' }}>
                         <GroupsIcon sx = {{ color: common.white }}/>
                     </ListItemIcon>

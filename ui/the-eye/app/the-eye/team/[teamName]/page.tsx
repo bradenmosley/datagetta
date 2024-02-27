@@ -10,8 +10,17 @@ export default async function TeamPage({ params }: { params: { teamName: string 
     const team = await prisma.team.findUnique({
         where: {
             team_name: teamName_addSpace,
-        }
+        },
+        include: {
+            players: true,
+        },
     });
+
+    if (team?.players === undefined) {
+        return (
+            <h6>Error: No players found for {team?.team_name}</h6>
+        );
+    }
 
     return (
         <Box >
@@ -22,7 +31,7 @@ export default async function TeamPage({ params }: { params: { teamName: string 
                 losses = {team?.number_losses as number}
             />
             
-            <RosterTable />
+            <RosterTable players = {team.players}/>
         </Box>
     );
 }
