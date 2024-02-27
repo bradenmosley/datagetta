@@ -5,14 +5,7 @@ import logo from './assets/TheEyeLogo.svg'
 
 export default function TabGroup() {
     return (
-        <Box
-            sx={{ 
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: 4,
-            }}
-        >
+        <Box sx={{textAlign: 'center'}}>
             <Image 
                 src = {logo}
                 width = { 134 }
@@ -20,6 +13,7 @@ export default function TabGroup() {
                 alt = 'logo of a tiger eye'
                 priority = { true }
             />
+            <Box sx={{paddingBottom: 2}}></Box>
             <Tabs />
         </Box>
     );
