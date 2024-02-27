@@ -8,7 +8,7 @@ export default function TeamInfo(
     {
         return (
 
-            <Box sx={{ paddingLeft: 4, paddingBottom: 2 }}>
+            <Box sx={{ paddingBottom: 2 }}>
                 <Typography variant='h4' fontWeight={700}>{name}</Typography>
                 <Typography variant='h6' fontWeight={600}>{conference}</Typography>
                 <Typography variant='h6'>{wins}-{losses}</Typography>
