@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import { prisma } from '@/app/db';
 import TeamInfo from '../components/TeamInfo';
 import RosterTable from '../components/RosterTable';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default async function TeamPage({ params }: { params: { teamName: string } }) {
     const teamName_addSpace = params.teamName.replace(/%20/g, ' ');
@@ -30,8 +31,9 @@ export default async function TeamPage({ params }: { params: { teamName: string 
                 wins = {team?.number_wins as number}
                 losses = {team?.number_losses as number}
             />
-            
-            <RosterTable players = {team.players}/>
+            <React.Suspense fallback = {<CircularProgress />}>
+                <RosterTable players = {team.players}/>
+            </React.Suspense>
         </Box>
     );
 }
