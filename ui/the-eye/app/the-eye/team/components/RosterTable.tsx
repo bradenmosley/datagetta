@@ -1,7 +1,6 @@
 'use client'
 
 import * as React from 'react';
-import CircularProgress from '@mui/material/CircularProgress';
 import Link from '@mui/material/Link';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { Theme } from '@/app/theme';
@@ -102,17 +101,15 @@ const columns: GridColDef[] = [
 
 export default function RosterTable({players}: {players: player[]}) {
     return (
-        <React.Suspense fallback = {<CircularProgress />}>
-            <DataGrid
-                rows = {players}
-                columns = {columns}
-                autoHeight = {true}
-                hideFooter = {true}
-                sx={{
-                    '& .MuiDataGrid-columnHeaders': {backgroundColor: Theme.palette.secondary.main},
-                    '& .MuiDataGrid-columnHeaderTitle': {fontWeight: 700},
-                }}
-            />
-        </React.Suspense>
+        <DataGrid
+            rows = {players}
+            columns = {columns}
+            autoHeight = {true}
+            hideFooter = {true}
+            sx={{
+                '& .MuiDataGrid-columnHeaders': {backgroundColor: Theme.palette.secondary.main},
+                '& .MuiDataGrid-columnHeaderTitle': {fontWeight: 700},
+            }}
+        />
     );
 }
