@@ -187,7 +187,7 @@ CREATE TABLE "trackman_catcher" (
   "CatcherThrowLocationConfidence" varchar
 );
 
-CREATE TABLE "trackman_hitter" (
+CREATE TABLE "trackman_batter" (
   "pitch_uuid" uuid UNIQUE PRIMARY KEY DEFAULT (uuid_generate_v4()),
   "Batter" varchar,
   "BatterID" int,
@@ -248,48 +248,34 @@ CREATE TABLE "seasons" (
   "end_date" date
 );
 
-CREATE TABLE "pitcher_normative_data" (
-  "Pitcher" varchar,
-  "MappedPitch" varchar,
-  "RelSpeed" decimal,
-  "VertRelAngle" decimal,
-  "HorzRelAngle" decimal,
-  "SpinRate" decimal,
-  "SpinAxis" decimal,
-  "RelHeight" decimal,
-  "RelSide" decimal,
-  "Extension" decimal,
-  "VertBreak" decimal,
-  "InducedVertBreak" decimal,
-  "HorzBreak" decimal,
-  "VertApprAngle" decimal,
-  "HorzApprAngle" decimal
-);
-
 CREATE UNIQUE INDEX ON "players" ("player_name", "team_name");
+
+CREATE UNIQUE INDEX ON "trackman_pitcher" ("Pitcher", "PitcherTeam");
+
+CREATE UNIQUE INDEX ON "trackman_catcher" ("Catcher", "CatcherTeam");
+
+CREATE UNIQUE INDEX ON "trackman_batter" ("Batter", "BatterTeam");
 
 ALTER TABLE "trackman_metadata" ADD FOREIGN KEY ("pitch_uuid") REFERENCES "trackman_pitcher" ("pitch_uuid");
 
 ALTER TABLE "trackman_catcher" ADD FOREIGN KEY ("pitch_uuid") REFERENCES "trackman_pitcher" ("pitch_uuid");
 
-ALTER TABLE "trackman_hitter" ADD FOREIGN KEY ("pitch_uuid") REFERENCES "trackman_pitcher" ("pitch_uuid");
+ALTER TABLE "trackman_batter" ADD FOREIGN KEY ("pitch_uuid") REFERENCES "trackman_pitcher" ("pitch_uuid");
 
 ALTER TABLE "trackman_metadata" ADD FOREIGN KEY ("pitch_uuid") REFERENCES "trackman_catcher" ("pitch_uuid");
 
-ALTER TABLE "trackman_hitter" ADD FOREIGN KEY ("pitch_uuid") REFERENCES "trackman_catcher" ("pitch_uuid");
+ALTER TABLE "trackman_batter" ADD FOREIGN KEY ("pitch_uuid") REFERENCES "trackman_catcher" ("pitch_uuid");
 
-ALTER TABLE "trackman_metadata" ADD FOREIGN KEY ("pitch_uuid") REFERENCES "trackman_hitter" ("pitch_uuid");
+ALTER TABLE "trackman_metadata" ADD FOREIGN KEY ("pitch_uuid") REFERENCES "trackman_batter" ("pitch_uuid");
 
 ALTER TABLE "players" ADD FOREIGN KEY ("player_name", "team_name") REFERENCES "trackman_pitcher" ("Pitcher", "PitcherTeam");
 
 ALTER TABLE "players" ADD FOREIGN KEY ("player_name", "team_name") REFERENCES "trackman_catcher" ("Catcher", "CatcherTeam");
 
-ALTER TABLE "players" ADD FOREIGN KEY ("player_name", "team_name") REFERENCES "trackman_hitter" ("Batter", "BatterTeam");
+ALTER TABLE "players" ADD FOREIGN KEY ("player_name", "team_name") REFERENCES "trackman_batter" ("Batter", "BatterTeam");
 
 ALTER TABLE "players" ADD FOREIGN KEY ("pitch_sums_id") REFERENCES "pitch_sums" ("pitch_sums_id");
 
 ALTER TABLE "players" ADD FOREIGN KEY ("team_name") REFERENCES "teams" ("team_name");
 
 ALTER TABLE "teams" ADD FOREIGN KEY ("conference") REFERENCES "conferences" ("conference");
-
-ALTER TABLE "pitcher_normative_data" ADD FOREIGN KEY ("Pitcher") REFERENCES "players" ("player_name");
