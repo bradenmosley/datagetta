@@ -49,7 +49,8 @@ CREATE TABLE "pitch_sums" (
 );
 
 CREATE TABLE "teams" (
-  "team_name" varchar PRIMARY KEY,
+  "team_name" varchar UNIQUE PRIMARY KEY,
+  "display_name" varchar,
   "conference" varchar,
   "number_wins" integer,
   "number_losses" integer,
@@ -277,11 +278,11 @@ ALTER TABLE "trackman_hitter" ADD FOREIGN KEY ("pitch_uuid") REFERENCES "trackma
 
 ALTER TABLE "trackman_metadata" ADD FOREIGN KEY ("pitch_uuid") REFERENCES "trackman_hitter" ("pitch_uuid");
 
-ALTER TABLE "players" ADD FOREIGN KEY ("player_name") REFERENCES "trackman_pitcher" ("Pitcher");
+ALTER TABLE "players" ADD FOREIGN KEY ("player_name", "team_name") REFERENCES "trackman_pitcher" ("Pitcher", "PitcherTeam");
 
-ALTER TABLE "players" ADD FOREIGN KEY ("player_name") REFERENCES "trackman_catcher" ("Catcher");
+ALTER TABLE "players" ADD FOREIGN KEY ("player_name", "team_name") REFERENCES "trackman_catcher" ("Catcher", "CatcherTeam");
 
-ALTER TABLE "players" ADD FOREIGN KEY ("player_name") REFERENCES "trackman_hitter" ("Batter");
+ALTER TABLE "players" ADD FOREIGN KEY ("player_name", "team_name") REFERENCES "trackman_hitter" ("Batter", "BatterTeam");
 
 ALTER TABLE "players" ADD FOREIGN KEY ("pitch_sums_id") REFERENCES "pitch_sums" ("pitch_sums_id");
 
