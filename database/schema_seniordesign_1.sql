@@ -1,5 +1,5 @@
 CREATE TABLE "players" (
-  "player_id" uuid PRIMARY KEY DEFAULT (uuid_generate_v4()),
+  "player_id" uuid UNIQUE PRIMARY KEY DEFAULT (uuid_generate_v4()),
   "player_name" varchar,
   "team_name" varchar,
   "player_number" int,
@@ -34,20 +34,18 @@ CREATE TABLE "players" (
   "games" int,
   "games_started" int,
   "innings_pitched" int,
-  "pitch_sums_id" uuid,
-  UNIQUE ("player_id")
+  "pitch_sums_id" uuid
 );
 
 CREATE TABLE "pitch_sums" (
-  "pitch_sums_id" uuid PRIMARY KEY DEFAULT (uuid_generate_v4()),
+  "pitch_sums_id" uuid UNIQUE PRIMARY KEY DEFAULT (uuid_generate_v4()),
   "curveball_count" int,
   "fourseam_count" int,
   "sinker_count" int,
   "slider_count" int,
   "splitter_count" int,
   "cutter_count" int,
-  "changeup_count" int,
-  UNIQUE ("pitch_sums_id")
+  "changeup_count" int
 );
 
 CREATE TABLE "teams" (
@@ -55,8 +53,7 @@ CREATE TABLE "teams" (
   "conference" varchar,
   "number_wins" integer,
   "number_losses" integer,
-  "win_percent" decimal,
-  UNIQUE ("team_name")
+  "win_percent" decimal
 );
 
 CREATE TABLE "conferences" (
@@ -64,7 +61,7 @@ CREATE TABLE "conferences" (
 );
 
 CREATE TABLE "trackman_metadata" (
-  "pitch_uuid" uuid PRIMARY KEY DEFAULT (uuid_generate_v4()),
+  "pitch_uuid" uuid UNIQUE PRIMARY KEY DEFAULT (uuid_generate_v4()),
   "game_date" date,
   "pitch_time" time,
   "inning" int,
@@ -94,12 +91,11 @@ CREATE TABLE "trackman_metadata" (
   "HomeTeamForeignID" int,
   "AwayTeamForeignID" int,
   "GameForeignID" int,
-  "PlayID" varchar,
-  UNIQUE ("pitch_uuid")
+  "PlayID" varchar
 );
 
 CREATE TABLE "trackman_pitcher" (
-  "pitch_uuid" uuid PRIMARY KEY DEFAULT (uuid_generate_v4()),
+  "pitch_uuid" uuid UNIQUE PRIMARY KEY DEFAULT (uuid_generate_v4()),
   "PitchNo" int,
   "PAofInning" int,
   "PitchofPA" int,
@@ -154,12 +150,11 @@ CREATE TABLE "trackman_pitcher" (
   "PitchTrajectoryZc2" decimal,
   "PitchReleaseConfidence" varchar,
   "PitchLocationConfidence" varchar,
-  "PicthMovementConfidence" varchar,
-  UNIQUE ("pitch_uuid")
+  "PicthMovementConfidence" varchar
 );
 
 CREATE TABLE "trackman_catcher" (
-  "pitch_uuid" uuid PRIMARY KEY DEFAULT (uuid_generate_v4()),
+  "pitch_uuid" uuid UNIQUE PRIMARY KEY DEFAULT (uuid_generate_v4()),
   "Catcher" varchar,
   "CatcherID" int,
   "CatcherThrows" varchar,
@@ -188,12 +183,11 @@ CREATE TABLE "trackman_catcher" (
   "ThrowTrajectoryZc2" decimal,
   "CatcherThrowCatchConfidence" varchar,
   "CatcherThrowReleaseConfidence" varchar,
-  "CatcherThrowLocationConfidence" varchar,
-  UNIQUE ("pitch_uuid")
+  "CatcherThrowLocationConfidence" varchar
 );
 
 CREATE TABLE "trackman_hitter" (
-  "pitch_uuid" uuid PRIMARY KEY DEFAULT (uuid_generate_v4()),
+  "pitch_uuid" uuid UNIQUE PRIMARY KEY DEFAULT (uuid_generate_v4()),
   "Batter" varchar,
   "BatterID" int,
   "BatterSide" varchar,
@@ -244,8 +238,7 @@ CREATE TABLE "trackman_hitter" (
   "HitTrajectoryZc7" decimal,
   "HitTrajectoryZc8" decimal,
   "HitLaunchCondfidence" varchar,
-  "HitLandingConfidence" varchar,
-  UNIQUE ("pitch_uuid")
+  "HitLandingConfidence" varchar
 );
 
 CREATE TABLE "seasons" (
