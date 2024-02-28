@@ -34,7 +34,8 @@ CREATE TABLE "players" (
   "games" int,
   "games_started" int,
   "innings_pitched" int,
-  "pitch_sums_id" uuid
+  "pitch_sums_id" uuid,
+  UNIQUE ("player_id")
 );
 
 CREATE TABLE "pitch_sums" (
@@ -45,7 +46,8 @@ CREATE TABLE "pitch_sums" (
   "slider_count" int,
   "splitter_count" int,
   "cutter_count" int,
-  "changeup_count" int
+  "changeup_count" int,
+  UNIQUE ("pitch_sums_id")
 );
 
 CREATE TABLE "teams" (
@@ -53,7 +55,8 @@ CREATE TABLE "teams" (
   "conference" varchar,
   "number_wins" integer,
   "number_losses" integer,
-  "win_percent" decimal
+  "win_percent" decimal,
+  UNIQUE ("team_name")
 );
 
 CREATE TABLE "conferences" (
@@ -91,7 +94,8 @@ CREATE TABLE "trackman_metadata" (
   "HomeTeamForeignID" int,
   "AwayTeamForeignID" int,
   "GameForeignID" int,
-  "PlayID" varchar
+  "PlayID" varchar,
+  UNIQUE ("pitch_uuid")
 );
 
 CREATE TABLE "trackman_pitcher" (
@@ -150,7 +154,8 @@ CREATE TABLE "trackman_pitcher" (
   "PitchTrajectoryZc2" decimal,
   "PitchReleaseConfidence" varchar,
   "PitchLocationConfidence" varchar,
-  "PicthMovementConfidence" varchar
+  "PicthMovementConfidence" varchar,
+  UNIQUE ("pitch_uuid")
 );
 
 CREATE TABLE "trackman_catcher" (
@@ -183,7 +188,8 @@ CREATE TABLE "trackman_catcher" (
   "ThrowTrajectoryZc2" decimal,
   "CatcherThrowCatchConfidence" varchar,
   "CatcherThrowReleaseConfidence" varchar,
-  "CatcherThrowLocationConfidence" varchar
+  "CatcherThrowLocationConfidence" varchar,
+  UNIQUE ("pitch_uuid")
 );
 
 CREATE TABLE "trackman_hitter" (
@@ -238,7 +244,8 @@ CREATE TABLE "trackman_hitter" (
   "HitTrajectoryZc7" decimal,
   "HitTrajectoryZc8" decimal,
   "HitLaunchCondfidence" varchar,
-  "HitLandingConfidence" varchar
+  "HitLandingConfidence" varchar,
+  UNIQUE ("pitch_uuid")
 );
 
 CREATE TABLE "seasons" (
