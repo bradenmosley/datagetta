@@ -220,7 +220,7 @@ CREATE TABLE "seasons" (
 );
 
 CREATE TABLE "pitcher_normative_data" (
-  "Pitcher" varchar,
+  "Pitcher" varchar PRIMARY KEY,
   "MappedPitch" varchar,
   "RelSpeed" decimal,
   "VertRelAngle" decimal,
