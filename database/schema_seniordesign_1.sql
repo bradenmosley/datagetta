@@ -1,23 +1,51 @@
 CREATE TABLE "players" (
-  "player_id" integer PRIMARY KEY,
+  "player_id" uuid PRIMARY KEY DEFAULT (uuid_generate_v4()),
   "player_name" varchar,
   "team_name" varchar,
   "player_number" int,
-  "position" varchar
-);
-
-CREATE TABLE "player_statistics" (
-  "player_id" integer PRIMARY KEY,
+  "position" varchar,
   "at_bats" integer,
+  "hits" integer,
+  "walks_hitter" integer,
+  "strikes_hitter" integer,
+  "homeruns_hitter" integer,
+  "extra_base_hits_hitter" integer,
+  "plate_appearances" integer,
+  "hit_by_pitch" integer,
+  "sacrifice" integer,
+  "total_bases" integer,
+  "total_strikeouts_pitcher" integer,
+  "total_batters_faced" integer,
+  "misses_in_zone" integer,
+  "swings_in_zone" integer,
+  "total_num_chases" integer,
+  "total_out_of_zone_pitches" integer,
+  "total_walks_pitcher" integer,
   "batting_average" decimal,
   "on_base_percentage" decimal,
   "slugging_percentage" decimal,
-  "ops" decimal,
+  "onbase_plus_slugging" decimal,
   "isolated_power" decimal,
   "k_percentage" decimal,
   "base_on_ball_percentage" decimal,
   "in_zone_whiff_percentage" decimal,
-  "chase_percentage" decimal
+  "chase_percentage" decimal,
+  "pitches" int,
+  "games" int,
+  "games_started" int,
+  "innings_pitched" int,
+  "pitch_sums_id" uuid
+);
+
+CREATE TABLE "pitch_sums" (
+  "pitch_sums_id" uuid PRIMARY KEY DEFAULT (uuid_generate_v4()),
+  "curveball_count" int,
+  "fourseam_count" int,
+  "sinker_count" int,
+  "slider_count" int,
+  "splitter_count" int,
+  "cutter_count" int,
+  "changeup_count" int
 );
 
 CREATE TABLE "teams" (
@@ -33,7 +61,7 @@ CREATE TABLE "conferences" (
 );
 
 CREATE TABLE "trackman_metadata" (
-  "pitch_uuid" integer PRIMARY KEY,
+  "pitch_uuid" uuid PRIMARY KEY DEFAULT (uuid_generate_v4()),
   "game_date" date,
   "pitch_time" time,
   "inning" int,
@@ -67,7 +95,7 @@ CREATE TABLE "trackman_metadata" (
 );
 
 CREATE TABLE "trackman_pitcher" (
-  "pitch_uuid" integer PRIMARY KEY,
+  "pitch_uuid" uuid PRIMARY KEY DEFAULT (uuid_generate_v4()),
   "PitchNo" int,
   "PAofInning" int,
   "PitchofPA" int,
@@ -126,7 +154,7 @@ CREATE TABLE "trackman_pitcher" (
 );
 
 CREATE TABLE "trackman_catcher" (
-  "pitch_uuid" integer PRIMARY KEY,
+  "pitch_uuid" uuid PRIMARY KEY DEFAULT (uuid_generate_v4()),
   "Catcher" varchar,
   "CatcherID" int,
   "CatcherThrows" varchar,
@@ -159,7 +187,7 @@ CREATE TABLE "trackman_catcher" (
 );
 
 CREATE TABLE "trackman_hitter" (
-  "pitch_uuid" integer PRIMARY KEY,
+  "pitch_uuid" uuid PRIMARY KEY DEFAULT (uuid_generate_v4()),
   "Batter" varchar,
   "BatterID" int,
   "BatterSide" varchar,
@@ -220,7 +248,7 @@ CREATE TABLE "seasons" (
 );
 
 CREATE TABLE "pitcher_normative_data" (
-  "Pitcher" varchar PRIMARY KEY,
+  "Pitcher" varchar,
   "MappedPitch" varchar,
   "RelSpeed" decimal,
   "VertRelAngle" decimal,
@@ -255,10 +283,10 @@ ALTER TABLE "players" ADD FOREIGN KEY ("player_name") REFERENCES "trackman_catch
 
 ALTER TABLE "players" ADD FOREIGN KEY ("player_name") REFERENCES "trackman_hitter" ("Batter");
 
+ALTER TABLE "players" ADD FOREIGN KEY ("pitch_sums_id") REFERENCES "pitch_sums" ("pitch_sums_id");
+
 ALTER TABLE "players" ADD FOREIGN KEY ("team_name") REFERENCES "teams" ("team_name");
 
 ALTER TABLE "teams" ADD FOREIGN KEY ("conference") REFERENCES "conferences" ("conference");
-
-ALTER TABLE "player_statistics" ADD FOREIGN KEY ("player_id") REFERENCES "players" ("player_id");
 
 ALTER TABLE "pitcher_normative_data" ADD FOREIGN KEY ("Pitcher") REFERENCES "players" ("player_name");
