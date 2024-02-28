@@ -1,32 +1,69 @@
-// Use DBML to define your database structure
+﻿// Use DBML to define your database structure
 // Docs: https://dbml.dbdiagram.io/docs
 
 
 Table players {
- player_id integer [primary key]
+ player_id uuid [primary key, unique, default: `uuid_generate_v4()`]
  player_name varchar
  team_name varchar
+ player_number int
  position varchar
+ at_bats integer
+ hits integer
+ walks_hitter integer
+ strikes_hitter integer
+ homeruns_hitter integer
+ extra_base_hits_hitter integer
+ plate_appearances integer
+ hit_by_pitch integer
+ sacrifice integer
+ total_bases integer
+ total_strikeouts_pitcher integer
+ total_batters_faced integer
+ misses_in_zone integer
+ swings_in_zone integer
+ total_num_chases integer
+ total_out_of_zone_pitches integer
+ total_walks_pitcher integer
+ batting_average decimal
+ on_base_percentage decimal
+ slugging_percentage decimal
+ onbase_plus_slugging decimal
+ isolated_power decimal
+ k_percentage decimal
+ base_on_ball_percentage decimal
+ in_zone_whiff_percentage decimal
+ chase_percentage decimal
+ pitches int
+ games int
+ games_started int
+ innings_pitched int
+ pitch_sums_id uuid
+
+
+ Indexes {
+   (player_name, team_name) [unique]
+ }
 }
 
 
-//all stats from coach Teaford
-Table player_statistics {
-  player_id integer [primary key]
-  at_bats integer
-  batting_average decimal
-  on_base_percentage decimal
-  slugging_percentage decimal
-  ops decimal
-  isolated_power decimal
-  k_percentage decimal
-  base_on_ball_percentage decimal
-  in_zone_whiff_percentage decimal
-  chase_percentage decimal
+Table pitch_sums {
+ pitch_sums_id uuid [primary key, unique, default: `uuid_generate_v4()`]
+ curveball_count int
+ fourseam_count int
+ sinker_count int
+ slider_count int
+ splitter_count int
+ cutter_count int
+ changeup_count int
+
+
 }
+
 
 Table teams {
- team_name varchar [primary key]
+ team_name varchar [primary key, unique]
+ display_name varchar
  conference varchar
  number_wins integer   //from trumedia
  number_losses integer //from trumedia
@@ -35,80 +72,228 @@ Table teams {
 
 
 Table conferences {
- conference varchar
+ conference varchar [primary key, unique]
 }
 
 
-//mapped 26 of ~180 columns
-Table trackman_data {
- pitch_uuid integer [primary key]
- pitchNo integer
- pitch_date date
+Table trackman_metadata {
+ pitch_uuid uuid [primary key, unique, default: `uuid_generate_v4()`]
+ game_date date
  pitch_time time
- PAofInning integer
- pitchofPA integer
- pitcher varchar
- pitcherID integer
- pitcherThrows varchar
- pitcherTeam varchar
- batter varchar
- batterID integer
- batterSide varchar
- batterTeam varchar
- pitcherSet varchar
- inning integer
- top_bottom varchar
- outs integer
- balls integer
- strikes integer
- taggedPitch varchar
- autoPitch varchar
+ inning int
+ top_bottom_outs int
+ balls int
+ strikes int
  pitchCall varchar
  KorBB varchar
- taggedHit varchar
- playResult varchar
- outsOnPlay integer
- catcher varchar
- about_150_columns_left varchar
-}
+ TaggedHitType varchar
+ PlayResult varchar
+ OutsOnPlay varchar
+ RunsScored varchar
+ RunnersAt varchar
+ HomeTeam varchar
+ AwayTeam varchar
+ Stadium varchar
+ Level varchar
+ League varchar
+ GameID varchar
+ GameUID varchar
+ UTCDate date
+ UTCtime time
+ LocalDateTime date
+ UTCDateTime date
+ AutoHitType varchar
+ System varchar
+ HomeTeamForeignID int
+ AwayTeamForeignID int
+ GameForeignID int
+ PlayID varchar
+ }
 
-//talk to Adam about what we want to keep
-Table trackman_revised_data {
- example_column varchar [primary key]
-}
 
-
-Table seasons {
- season_title varchar
- start_date date
- end_date date
-}
-
-
-//mapped completely
-Table pitcher_normative_data {
+Table trackman_pitcher {
+ pitch_uuid uuid [primary key, unique, default: `uuid_generate_v4()`]
+ PitchNo int
+ PAofInning int
+ PitchofPA int
  Pitcher varchar
- MappedPitch varchar
+ PitcherID int
+ PitcherThrows varchar
+ PitcherTeam varchar
+ PitcherSet varchar
+ TaggedPitch varchar
+ AutoPitchType varchar
  RelSpeed decimal
  VertRelAngle decimal
  HorzRelAngle decimal
  SpinRate decimal
  SpinAxis decimal
+ Tilt varchar
  RelHeight decimal
  RelSide decimal
  Extension decimal
  VertBreak decimal
- InducedVertBreak decimal
+ InducedVert decimal
  HorzBreak decimal
+ PlateLocHeight decimal
+ PlateLocSide decimal
+ ZoneSpeed decimal
  VertApprAngle decimal
  HorzApprAngle decimal
+ ZoneTime decimal
+ pfxx decimal
+ pfxz decimal
+ x0 decimal
+ y0 decimal
+ z0 decimal
+ vx0 decimal
+ vy0 decimal
+ vz0 decimal
+ ax0 decimal
+ ay0 decimal
+ az0 decimal
+ SpeedDrop decimal
+ PitchLastMeasuredX decimal
+ PitchLastMeasuredY decimal
+ PitchLastMeasuredZ decimal
+ PitchTrajectoryXc0 decimal
+ PitchTrajectoryXc1 decimal
+ PitchTrajectoryXc2 decimal
+ PitchTrajectoryYc0 decimal
+ PitchTrajectoryYc1 decimal
+ PitchTrajectoryYc2 decimal
+ PitchTrajectoryZc0 decimal
+ PitchTrajectoryZc1 decimal
+ PitchTrajectoryZc2 decimal
+ PitchReleaseConfidence varchar
+ PitchLocationConfidence varchar
+ PicthMovementConfidence varchar
+
+
+ Indexes {
+   (Pitcher, PitcherTeam) [unique]
+ }
 }
 
 
+Table trackman_catcher {
+ pitch_uuid uuid [primary key, unique, default: `uuid_generate_v4()`]
+ Catcher varchar
+ CatcherID int
+ CatcherThrows varchar
+ CatcherTeam varchar
+ ThrowSpeed decimal
+ PopTime decimal
+ ExchangeTime decimal
+ TimeToBase decimal
+ CatchPositionX decimal
+ CatchPositionY decimal
+ CatchPositionZ decimal
+ ThrowPositionX decimal
+ ThrowPositionY decimal
+ ThrowPositionZ decimal
+ BasePositionX decimal
+ BasePositionY decimal
+ BasePositionZ decimal
+ ThrowTrajectoryXc0 decimal
+ ThrowTrajectoryXc1 decimal
+ ThrowTrajectoryXc2 decimal
+ ThrowTrajectoryYc0 decimal
+ ThrowTrajectoryYc1 decimal
+ ThrowTrajectoryYc2 decimal
+ ThrowTrajectoryZc0 decimal
+ ThrowTrajectoryZc1 decimal
+ ThrowTrajectoryZc2 decimal
+ CatcherThrowCatchConfidence varchar
+ CatcherThrowReleaseConfidence varchar
+ CatcherThrowLocationConfidence varchar
+
+
+ Indexes {
+   (Catcher, CatcherTeam) [unique]
+ }
+}
+
+
+Table trackman_batter {
+ pitch_uuid uuid [primary key, unique, default: `uuid_generate_v4()`]
+ Batter varchar
+ BatterID int
+ BatterSide varchar
+ BatterTeam varchar
+ ExitSpeed decimal
+ Angle decimal
+ Direction decimal
+ HitSpinRate decimal
+ PositionAt110X decimal
+ PositionAt110Y decimal
+ PositionAt110Z decimal
+ Distance decimal
+ LastTracked decimal
+ Bearing decimal
+ HangTime decimal
+ EffectiveVelo decimal
+ MaxHeight decimal
+ MeasuredDuration decimal
+ ContactPositionX decimal
+ ContactPositionY decimal
+ ContactPositionZ decimal
+ HitSpinAxis decimal
+ HitTrajectoryXc0 decimal
+ HitTrajectoryXc1 decimal
+ HitTrajectoryXc2 decimal
+ HitTrajectoryXc3 decimal
+ HitTrajectoryXc4 decimal
+ HitTrajectoryXc5 decimal
+ HitTrajectoryXc6 decimal
+ HitTrajectoryXc7 decimal
+ HitTrajectoryXc8 decimal
+ HitTrajectoryYc0 decimal
+ HitTrajectoryYc1 decimal
+ HitTrajectoryYc2 decimal
+ HitTrajectoryYc3 decimal
+ HitTrajectoryYc4 decimal
+ HitTrajectoryYc5 decimal
+ HitTrajectoryYc6 decimal
+ HitTrajectoryYc7 decimal
+ HitTrajectoryYc8 decimal
+ HitTrajectoryZc0 decimal
+ HitTrajectoryZc1 decimal
+ HitTrajectoryZc2 decimal
+ HitTrajectoryZc3 decimal
+ HitTrajectoryZc4 decimal
+ HitTrajectoryZc5 decimal
+ HitTrajectoryZc6 decimal
+ HitTrajectoryZc7 decimal
+ HitTrajectoryZc8 decimal
+ HitLaunchCondfidence varchar
+ HitLandingConfidence varchar
+
+
+ Indexes {
+   (Batter, BatterTeam) [unique]
+ }
+}
+
+
+Table seasons {
+ season_title varchar [primary key, unique]
+ start_date date
+ end_date date
+}
+
+
+
+
+Ref: trackman_pitcher.pitch_uuid - trackman_metadata.pitch_uuid
+Ref: trackman_pitcher.pitch_uuid - trackman_catcher.pitch_uuid
+Ref: trackman_pitcher.pitch_uuid - trackman_batter.pitch_uuid
+Ref: trackman_catcher.pitch_uuid - trackman_metadata.pitch_uuid
+Ref: trackman_catcher.pitch_uuid - trackman_batter.pitch_uuid
+Ref: trackman_batter.pitch_uuid - trackman_metadata.pitch_uuid
+Ref: trackman_pitcher.(Pitcher, PitcherTeam) - players.(player_name, team_name)
+Ref: trackman_catcher.(Catcher, CatcherTeam) - players.(player_name, team_name)
+Ref: trackman_batter.(Batter, BatterTeam) - players.(player_name, team_name)
+Ref: pitch_sums.pitch_sums_id - players.pitch_sums_id
 Ref: players.team_name > teams.team_name
 Ref: teams.conference > conferences.conference
-Ref: players.player_id - player_statistics.player_id
-Ref: pitcher_normative_data.Pitcher >  players.player_name
-Ref: trackman_data.pitcher >  players.player_name
-Ref: trackman_data.batter >  players.player_name
-Ref: trackman_data.catcher >  players.player_name
