@@ -58,7 +58,7 @@ CREATE TABLE "teams" (
 );
 
 CREATE TABLE "conferences" (
-  "conference" varchar
+  "conference" varchar UNIQUE PRIMARY KEY
 );
 
 CREATE TABLE "trackman_metadata" (
@@ -243,7 +243,7 @@ CREATE TABLE "trackman_hitter" (
 );
 
 CREATE TABLE "seasons" (
-  "season_title" varchar,
+  "season_title" varchar UNIQUE PRIMARY KEY,
   "start_date" date,
   "end_date" date
 );
@@ -265,6 +265,8 @@ CREATE TABLE "pitcher_normative_data" (
   "VertApprAngle" decimal,
   "HorzApprAngle" decimal
 );
+
+CREATE UNIQUE INDEX ON "players" ("player_name", "team_name");
 
 ALTER TABLE "trackman_metadata" ADD FOREIGN KEY ("pitch_uuid") REFERENCES "trackman_pitcher" ("pitch_uuid");
 
