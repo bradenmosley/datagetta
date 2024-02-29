@@ -17,7 +17,7 @@ services:
       command:
       - |
          npm ci
-         npx prisma db pull
+         npx prisma db pull --force
          npx prisma generate
          npx prisma migrate dev --name init
          npx prisma migrate deploy
