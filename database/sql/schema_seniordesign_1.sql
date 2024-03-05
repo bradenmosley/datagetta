@@ -273,5 +273,3 @@ ALTER TABLE "players" ADD FOREIGN KEY ("pitch_sums_id") REFERENCES "pitch_sums" 
 ALTER TABLE "players" ADD FOREIGN KEY ("team_name") REFERENCES "teams" ("team_name");
 
 ALTER TABLE "teams" ADD FOREIGN KEY ("conference") REFERENCES "conferences" ("conference");
-
-ALTER TABLE "trackman_catcher" ADD FOREIGN KEY ("ThrowTrajectoryYc0") REFERENCES "trackman_batter" ("MeasuredDuration");
