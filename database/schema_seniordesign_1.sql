@@ -250,12 +250,6 @@ CREATE TABLE "seasons" (
 
 CREATE UNIQUE INDEX ON "players" ("player_name", "team_name");
 
-CREATE UNIQUE INDEX ON "trackman_pitcher" ("Pitcher", "PitcherTeam");
-
-CREATE UNIQUE INDEX ON "trackman_catcher" ("Catcher", "CatcherTeam");
-
-CREATE UNIQUE INDEX ON "trackman_batter" ("Batter", "BatterTeam");
-
 ALTER TABLE "trackman_metadata" ADD FOREIGN KEY ("pitch_uuid") REFERENCES "trackman_pitcher" ("pitch_uuid");
 
 ALTER TABLE "trackman_catcher" ADD FOREIGN KEY ("pitch_uuid") REFERENCES "trackman_pitcher" ("pitch_uuid");
@@ -268,14 +262,16 @@ ALTER TABLE "trackman_batter" ADD FOREIGN KEY ("pitch_uuid") REFERENCES "trackma
 
 ALTER TABLE "trackman_metadata" ADD FOREIGN KEY ("pitch_uuid") REFERENCES "trackman_batter" ("pitch_uuid");
 
-ALTER TABLE "players" ADD FOREIGN KEY ("player_name", "team_name") REFERENCES "trackman_pitcher" ("Pitcher", "PitcherTeam");
+ALTER TABLE "trackman_pitcher" ADD FOREIGN KEY ("Pitcher", "PitcherTeam") REFERENCES "players" ("player_name", "team_name");
 
-ALTER TABLE "players" ADD FOREIGN KEY ("player_name", "team_name") REFERENCES "trackman_catcher" ("Catcher", "CatcherTeam");
+ALTER TABLE "trackman_catcher" ADD FOREIGN KEY ("Catcher", "CatcherTeam") REFERENCES "players" ("player_name", "team_name");
 
-ALTER TABLE "players" ADD FOREIGN KEY ("player_name", "team_name") REFERENCES "trackman_batter" ("Batter", "BatterTeam");
+ALTER TABLE "trackman_batter" ADD FOREIGN KEY ("Batter", "BatterTeam") REFERENCES "players" ("player_name", "team_name");
 
 ALTER TABLE "players" ADD FOREIGN KEY ("pitch_sums_id") REFERENCES "pitch_sums" ("pitch_sums_id");
 
 ALTER TABLE "players" ADD FOREIGN KEY ("team_name") REFERENCES "teams" ("team_name");
 
 ALTER TABLE "teams" ADD FOREIGN KEY ("conference") REFERENCES "conferences" ("conference");
+
+ALTER TABLE "trackman_catcher" ADD FOREIGN KEY ("ThrowTrajectoryYc0") REFERENCES "trackman_batter" ("MeasuredDuration");
