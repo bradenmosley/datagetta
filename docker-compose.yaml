@@ -34,10 +34,6 @@ services:
         - db.env
       networks:
          - datagetta_net
-      command: 
-      - |
-        chmod +x /sql/sql.sh
-        /sql/sql.sh
 
 networks:
    datagetta_net:
