@@ -34,6 +34,7 @@ services:
         - db.env
       networks:
          - datagetta_net
+      command: /sql/sql.sh
 
 networks:
    datagetta_net:
