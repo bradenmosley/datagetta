@@ -1,75 +1,28 @@
 CREATE TABLE "players" (
-  "player_id" uuid UNIQUE PRIMARY KEY DEFAULT (uuid_generate_v4()),
-  "player_name" varchar,
-  "team_name" varchar,
-  "player_number" int,
-  "position" varchar,
-  "at_bats" integer,
-  "hits" integer,
-  "walks_hitter" integer,
-  "strikes_hitter" integer,
-  "homeruns_hitter" integer,
-  "extra_base_hits_hitter" integer,
-  "plate_appearances" integer,
-  "hit_by_pitch" integer,
-  "sacrifice" integer,
-  "total_bases" integer,
-  "total_strikeouts_pitcher" integer,
-  "total_batters_faced" integer,
-  "misses_in_zone" integer,
-  "swings_in_zone" integer,
-  "total_num_chases" integer,
-  "total_out_of_zone_pitches" integer,
-  "total_walks_pitcher" integer,
-  "batting_average" decimal,
-  "on_base_percentage" decimal,
-  "slugging_percentage" decimal,
-  "onbase_plus_slugging" decimal,
-  "isolated_power" decimal,
-  "k_percentage" decimal,
-  "base_on_ball_percentage" decimal,
-  "in_zone_whiff_percentage" decimal,
-  "chase_percentage" decimal,
-  "pitches" int,
-  "games" int,
-  "games_started" int,
-  "innings_pitched" int,
-  "pitch_sums_id" uuid
-);
-
-CREATE TABLE "pitch_sums" (
-  "pitch_sums_id" uuid UNIQUE PRIMARY KEY DEFAULT (uuid_generate_v4()),
-  "curveball_count" int,
-  "fourseam_count" int,
-  "sinker_count" int,
-  "slider_count" int,
-  "splitter_count" int,
-  "cutter_count" int,
-  "changeup_count" int
+  "PlayerName" varchar,
+  "TeamName" varchar
 );
 
 CREATE TABLE "teams" (
-  "team_name" varchar UNIQUE PRIMARY KEY,
-  "display_name" varchar,
-  "conference" varchar,
-  "number_wins" integer,
-  "number_losses" integer,
-  "win_percent" decimal
+  "TeamName" varchar UNIQUE PRIMARY KEY,
+  "DisplayName" varchar,
+  "Conference" varchar
 );
 
 CREATE TABLE "conferences" (
-  "conference" varchar UNIQUE PRIMARY KEY
+  "ConferenceName" varchar UNIQUE PRIMARY KEY
 );
 
 CREATE TABLE "trackman_metadata" (
-  "pitch_uuid" uuid UNIQUE PRIMARY KEY DEFAULT (uuid_generate_v4()),
-  "game_date" date,
-  "pitch_time" time,
-  "inning" int,
-  "top_bottom_outs" int,
-  "balls" int,
-  "strikes" int,
-  "pitchCall" varchar,
+  "PitchUID" uuid UNIQUE PRIMARY KEY DEFAULT (uuid_generate_v4()),
+  "GameDate" date,
+  "PitchTime" time,
+  "Inning" int,
+  "TopBottom" varchar,
+  "Outs" int,
+  "Balls" int,
+  "Strikes" int,
+  "PitchCall" varchar,
   "KorBB" varchar,
   "TaggedHitType" varchar,
   "PlayResult" varchar,
@@ -96,7 +49,7 @@ CREATE TABLE "trackman_metadata" (
 );
 
 CREATE TABLE "trackman_pitcher" (
-  "pitch_uuid" uuid UNIQUE PRIMARY KEY DEFAULT (uuid_generate_v4()),
+  "PitchUID" uuid UNIQUE PRIMARY KEY DEFAULT (uuid_generate_v4()),
   "PitchNo" int,
   "PAofInning" int,
   "PitchofPA" int,
@@ -105,7 +58,7 @@ CREATE TABLE "trackman_pitcher" (
   "PitcherThrows" varchar,
   "PitcherTeam" varchar,
   "PitcherSet" varchar,
-  "TaggedPitch" varchar,
+  "TaggedPitchType" varchar,
   "AutoPitchType" varchar,
   "RelSpeed" decimal,
   "VertRelAngle" decimal,
@@ -151,11 +104,11 @@ CREATE TABLE "trackman_pitcher" (
   "PitchTrajectoryZc2" decimal,
   "PitchReleaseConfidence" varchar,
   "PitchLocationConfidence" varchar,
-  "PicthMovementConfidence" varchar
+  "PitchMovementConfidence" varchar
 );
 
 CREATE TABLE "trackman_catcher" (
-  "pitch_uuid" uuid UNIQUE PRIMARY KEY DEFAULT (uuid_generate_v4()),
+  "PitchUID" uuid UNIQUE PRIMARY KEY DEFAULT (uuid_generate_v4()),
   "Catcher" varchar,
   "CatcherID" int,
   "CatcherThrows" varchar,
@@ -188,7 +141,7 @@ CREATE TABLE "trackman_catcher" (
 );
 
 CREATE TABLE "trackman_batter" (
-  "pitch_uuid" uuid UNIQUE PRIMARY KEY DEFAULT (uuid_generate_v4()),
+  "PitchUID" uuid UNIQUE PRIMARY KEY DEFAULT (uuid_generate_v4()),
   "Batter" varchar,
   "BatterID" int,
   "BatterSide" varchar,
@@ -238,38 +191,30 @@ CREATE TABLE "trackman_batter" (
   "HitTrajectoryZc6" decimal,
   "HitTrajectoryZc7" decimal,
   "HitTrajectoryZc8" decimal,
-  "HitLaunchCondfidence" varchar,
+  "HitLaunchConfidence" varchar,
   "HitLandingConfidence" varchar
 );
 
 CREATE TABLE "seasons" (
-  "season_title" varchar UNIQUE PRIMARY KEY,
-  "start_date" date,
-  "end_date" date
+  "SeasonTitle" varchar UNIQUE PRIMARY KEY,
+  "StartDate" date,
+  "EndDate" date
 );
 
-CREATE UNIQUE INDEX ON "players" ("player_name", "team_name");
+CREATE UNIQUE INDEX ON "players" ("PlayerName", "TeamName");
 
-ALTER TABLE "trackman_metadata" ADD FOREIGN KEY ("pitch_uuid") REFERENCES "trackman_pitcher" ("pitch_uuid");
+ALTER TABLE "trackman_batter" ADD FOREIGN KEY ("PitchUID") REFERENCES "trackman_metadata" ("PitchUID");
 
-ALTER TABLE "trackman_catcher" ADD FOREIGN KEY ("pitch_uuid") REFERENCES "trackman_pitcher" ("pitch_uuid");
+ALTER TABLE "trackman_catcher" ADD FOREIGN KEY ("PitchUID") REFERENCES "trackman_metadata" ("PitchUID");
 
-ALTER TABLE "trackman_batter" ADD FOREIGN KEY ("pitch_uuid") REFERENCES "trackman_pitcher" ("pitch_uuid");
+ALTER TABLE "trackman_pitcher" ADD FOREIGN KEY ("PitchUID") REFERENCES "trackman_metadata" ("PitchUID");
 
-ALTER TABLE "trackman_metadata" ADD FOREIGN KEY ("pitch_uuid") REFERENCES "trackman_catcher" ("pitch_uuid");
+ALTER TABLE "trackman_pitcher" ADD FOREIGN KEY ("Pitcher", "PitcherTeam") REFERENCES "players" ("PlayerName", "TeamName");
 
-ALTER TABLE "trackman_batter" ADD FOREIGN KEY ("pitch_uuid") REFERENCES "trackman_catcher" ("pitch_uuid");
+ALTER TABLE "trackman_catcher" ADD FOREIGN KEY ("Catcher", "CatcherTeam") REFERENCES "players" ("PlayerName", "TeamName");
 
-ALTER TABLE "trackman_metadata" ADD FOREIGN KEY ("pitch_uuid") REFERENCES "trackman_batter" ("pitch_uuid");
+ALTER TABLE "trackman_batter" ADD FOREIGN KEY ("Batter", "BatterTeam") REFERENCES "players" ("PlayerName", "TeamName");
 
-ALTER TABLE "trackman_pitcher" ADD FOREIGN KEY ("Pitcher", "PitcherTeam") REFERENCES "players" ("player_name", "team_name");
+ALTER TABLE "players" ADD FOREIGN KEY ("TeamName") REFERENCES "teams" ("TeamName");
 
-ALTER TABLE "trackman_catcher" ADD FOREIGN KEY ("Catcher", "CatcherTeam") REFERENCES "players" ("player_name", "team_name");
-
-ALTER TABLE "trackman_batter" ADD FOREIGN KEY ("Batter", "BatterTeam") REFERENCES "players" ("player_name", "team_name");
-
-ALTER TABLE "players" ADD FOREIGN KEY ("pitch_sums_id") REFERENCES "pitch_sums" ("pitch_sums_id");
-
-ALTER TABLE "players" ADD FOREIGN KEY ("team_name") REFERENCES "teams" ("team_name");
-
-ALTER TABLE "teams" ADD FOREIGN KEY ("conference") REFERENCES "conferences" ("conference");
+ALTER TABLE "teams" ADD FOREIGN KEY ("Conference") REFERENCES "conferences" ("ConferenceName");

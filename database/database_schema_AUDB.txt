@@ -1,90 +1,34 @@
 ﻿// Use DBML to define your database structure
 // Docs: https://dbml.dbdiagram.io/docs
 
-
 Table players {
- player_id uuid [primary key, unique, default: `uuid_generate_v4()`]
- player_name varchar
- team_name varchar
- player_number int
- position varchar
- at_bats integer
- hits integer
- walks_hitter integer
- strikes_hitter integer
- homeruns_hitter integer
- extra_base_hits_hitter integer
- plate_appearances integer
- hit_by_pitch integer
- sacrifice integer
- total_bases integer
- total_strikeouts_pitcher integer
- total_batters_faced integer
- misses_in_zone integer
- swings_in_zone integer
- total_num_chases integer
- total_out_of_zone_pitches integer
- total_walks_pitcher integer
- batting_average decimal
- on_base_percentage decimal
- slugging_percentage decimal
- onbase_plus_slugging decimal
- isolated_power decimal
- k_percentage decimal
- base_on_ball_percentage decimal
- in_zone_whiff_percentage decimal
- chase_percentage decimal
- pitches int
- games int
- games_started int
- innings_pitched int
- pitch_sums_id uuid
-
-
+ PlayerName varchar
+ TeamName varchar
  Indexes {
-   (player_name, team_name) [unique]
+   (PlayerName, TeamName) [unique]
  }
 }
 
-
-Table pitch_sums {
- pitch_sums_id uuid [primary key, unique, default: `uuid_generate_v4()`]
- curveball_count int
- fourseam_count int
- sinker_count int
- slider_count int
- splitter_count int
- cutter_count int
- changeup_count int
-
-
-}
-
-
 Table teams {
- team_name varchar [primary key, unique]
- display_name varchar
- conference varchar
- number_wins integer   //from trumedia
- number_losses integer //from trumedia
- win_percent decimal   //from trumedia
+ TeamName varchar [primary key, unique]
+ DisplayName varchar
+ Conference varchar
 }
-
 
 Table conferences {
- conference varchar [primary key, unique]
+ ConferenceName varchar [primary key, unique]
 }
 
-
 Table trackman_metadata {
- pitch_uuid uuid [primary key, unique, default: `uuid_generate_v4()`]
- game_date date
- pitch_time time
- inning int
- top_bottom_outs int
- balls int
- strikes int
- pitchCall varchar
+ PitchUID uuid [primary key, unique, default: `uuid_generate_v4()`]
+ GameDate date
+ PitchTime time
+ Inning int
+ TopBottom varchar
+ Outs int
+ Balls int
+ Strikes int
+ PitchCall varchar
  KorBB varchar
  TaggedHitType varchar
  PlayResult varchar
@@ -112,7 +56,7 @@ Table trackman_metadata {
 
 
 Table trackman_pitcher {
- pitch_uuid uuid [primary key, unique, default: `uuid_generate_v4()`]
+ PitchUID uuid [primary key, unique, default: `uuid_generate_v4()`]
  PitchNo int
  PAofInning int
  PitchofPA int
@@ -121,7 +65,7 @@ Table trackman_pitcher {
  PitcherThrows varchar
  PitcherTeam varchar
  PitcherSet varchar
- TaggedPitch varchar
+ TaggedPitchType varchar
  AutoPitchType varchar
  RelSpeed decimal
  VertRelAngle decimal
@@ -167,17 +111,12 @@ Table trackman_pitcher {
  PitchTrajectoryZc2 decimal
  PitchReleaseConfidence varchar
  PitchLocationConfidence varchar
- PicthMovementConfidence varchar
-
-
- Indexes {
-   (Pitcher, PitcherTeam) [unique]
- }
+ PitchMovementConfidence varchar
 }
 
 
 Table trackman_catcher {
- pitch_uuid uuid [primary key, unique, default: `uuid_generate_v4()`]
+ PitchUID uuid [primary key, unique, default: `uuid_generate_v4()`]
  Catcher varchar
  CatcherID int
  CatcherThrows varchar
@@ -207,16 +146,11 @@ Table trackman_catcher {
  CatcherThrowCatchConfidence varchar
  CatcherThrowReleaseConfidence varchar
  CatcherThrowLocationConfidence varchar
-
-
- Indexes {
-   (Catcher, CatcherTeam) [unique]
- }
 }
 
 
 Table trackman_batter {
- pitch_uuid uuid [primary key, unique, default: `uuid_generate_v4()`]
+ PitchUID uuid [primary key, unique, default: `uuid_generate_v4()`]
  Batter varchar
  BatterID int
  BatterSide varchar
@@ -266,34 +200,21 @@ Table trackman_batter {
  HitTrajectoryZc6 decimal
  HitTrajectoryZc7 decimal
  HitTrajectoryZc8 decimal
- HitLaunchCondfidence varchar
+ HitLaunchConfidence varchar
  HitLandingConfidence varchar
-
-
- Indexes {
-   (Batter, BatterTeam) [unique]
- }
 }
-
 
 Table seasons {
- season_title varchar [primary key, unique]
- start_date date
- end_date date
+ SeasonTitle varchar [primary key, unique]
+ StartDate date
+ EndDate date
 }
 
-
-
-
-Ref: trackman_pitcher.pitch_uuid - trackman_metadata.pitch_uuid
-Ref: trackman_pitcher.pitch_uuid - trackman_catcher.pitch_uuid
-Ref: trackman_pitcher.pitch_uuid - trackman_batter.pitch_uuid
-Ref: trackman_catcher.pitch_uuid - trackman_metadata.pitch_uuid
-Ref: trackman_catcher.pitch_uuid - trackman_batter.pitch_uuid
-Ref: trackman_batter.pitch_uuid - trackman_metadata.pitch_uuid
-Ref: trackman_pitcher.(Pitcher, PitcherTeam) - players.(player_name, team_name)
-Ref: trackman_catcher.(Catcher, CatcherTeam) - players.(player_name, team_name)
-Ref: trackman_batter.(Batter, BatterTeam) - players.(player_name, team_name)
-Ref: pitch_sums.pitch_sums_id - players.pitch_sums_id
-Ref: players.team_name > teams.team_name
-Ref: teams.conference > conferences.conference
+Ref: trackman_metadata.PitchUID - trackman_batter.PitchUID
+Ref: trackman_metadata.PitchUID - trackman_catcher.PitchUID
+Ref: trackman_metadata.PitchUID - trackman_pitcher.PitchUID
+Ref: trackman_pitcher.(Pitcher, PitcherTeam) > players.(PlayerName, TeamName)
+Ref: trackman_catcher.(Catcher, CatcherTeam) > players.(PlayerName, TeamName)
+Ref: trackman_batter.(Batter, BatterTeam) > players.(PlayerName, TeamName)
+Ref: players.TeamName > teams.TeamName
+Ref: teams.Conference > conferences.ConferenceName
