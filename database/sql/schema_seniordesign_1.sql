@@ -1,6 +1,7 @@
 CREATE TABLE "players" (
   "PlayerName" varchar,
-  "TeamName" varchar
+  "TeamName" varchar,
+  PRIMARY KEY ("PlayerName", "TeamName")
 );
 
 CREATE TABLE "teams" (
@@ -200,8 +201,6 @@ CREATE TABLE "seasons" (
   "StartDate" date,
   "EndDate" date
 );
-
-CREATE UNIQUE INDEX ON "players" ("PlayerName", "TeamName");
 
 ALTER TABLE "trackman_batter" ADD FOREIGN KEY ("PitchUID") REFERENCES "trackman_metadata" ("PitchUID");
 

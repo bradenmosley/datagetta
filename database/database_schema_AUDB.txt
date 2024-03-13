@@ -5,7 +5,7 @@ Table players {
  PlayerName varchar
  TeamName varchar
  Indexes {
-   (PlayerName, TeamName) [unique]
+   (PlayerName, TeamName) [pk, unique]
  }
 }
 
