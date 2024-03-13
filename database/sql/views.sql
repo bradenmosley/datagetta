@@ -14,7 +14,7 @@ select "Pitcher" , "PitcherTeam",
 from trackman_pitcher
 group by ("Pitcher", "PitcherTeam");
 alter view pitch_sums_view
-add constraint pk_pitch_sums_view primary key ("Pitcher", "PitcherTeam");
+add constraint pk_pitch_sums_view unique ("Pitcher", "PitcherTeam");
 
 -- In Zone Whiff Percentage
 -- Chase Percentage
@@ -119,7 +119,7 @@ select
         end as base_on_ball_percentage
 from at_bats_subquery;
 alter view player_stats_view
-add constraint pk_player_stats_view primary key ("Batter", "BatterTeam");
+add constraint pk_player_stats_view unique ("Batter", "BatterTeam");
 
 -- Create Pitcher's stats view with:
 -- Total Batters Faced
@@ -174,4 +174,4 @@ select
     *
 from pitcher_stats_subquery;
 alter view pitcher_stats_view
-add constraint pk_pitcher_stats_view primary key ("Pitcher", "PitcherTeam");
+add constraint pk_pitcher_stats_view unique ("Pitcher", "PitcherTeam");
