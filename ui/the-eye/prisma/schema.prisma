@@ -3,10 +3,11 @@
 
 generator client {
   provider = "prisma-client-js"
-  previewFeatures = ["relationJoins", "views"]
+  previewFeatures = ["relationJoins", "views", "postgresqlExtensions"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  extensions = [uuidOssp(map: "uuid-ossp", schema: "public")]  
 }
