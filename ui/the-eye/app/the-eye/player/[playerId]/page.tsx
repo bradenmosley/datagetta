@@ -5,11 +5,11 @@ import ModelsBox from '../components/ModelsBox';
 import { prisma } from '@/app/db';
 
 export default async function PlayerPage({ params }: { params: { playerId: string } }) {
-    const player = await prisma.player.findUnique({
-        where: {
-            id: params.playerId,
-        }
-    });
+    // const player = await prisma.player.findUnique({
+    //     where: {
+    //         id: params.playerId,
+    //     }
+    // });
 
     return (
 
@@ -18,12 +18,12 @@ export default async function PlayerPage({ params }: { params: { playerId: strin
             flexDirection: 'column',
             gap: 4,
         }}>
-            <PlayerInfo
+            {/* <PlayerInfo
                 name = {player?.name as string}
                 team = {player?.team_name as string}
                 bats = 'R'
                 throws = 'L'
-            />
+            /> */}
             <ModelsBox />
         </Box>
         

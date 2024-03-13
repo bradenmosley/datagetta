@@ -6,15 +6,15 @@ import ConferenceTable from './components/ConferenceTable';
 import { prisma } from '@/app/db';
 
 export default async function ConferencePage() {
-    const conferences = await prisma.conference.findMany({
-        include: {
-            teams: {
-                select: {
-                    team_name: true
-                }
-            }
-        }
-    });
+    // const conferences = await prisma.conference.findMany({
+    //     include: {
+    //         teams: {
+    //             select: {
+    //                 team_name: true
+    //             }
+    //         }
+    //     }
+    // });
 
     return (
         <Box
@@ -27,7 +27,7 @@ export default async function ConferencePage() {
         >
             <Typography variant='h4' fontWeight={700}>Conferences</Typography>
 
-            <Grid container spacing={2}>
+            {/* <Grid container spacing={2}>
                 {conferences.map((conf, index) => 
                     <Grid sm={12} md={6} xl={4} key={index}>
                         <ConferenceTable
@@ -36,7 +36,7 @@ export default async function ConferencePage() {
                         />
                     </Grid>
                 )}
-            </Grid>
+            </Grid> */}
         </Box>
     );
 }
