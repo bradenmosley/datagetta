@@ -13,6 +13,8 @@ select "Pitcher" , "PitcherTeam",
             COUNT(*) filter (where "AutoPitchType" = 'Changeup') as changeup_count
 from trackman_pitcher
 group by ("Pitcher", "PitcherTeam");
+alter view pitch_sums_view
+add constraint pk_pitch_sums_view primary key ("Pitcher", "PitcherTeam");
 
 -- In Zone Whiff Percentage
 -- Chase Percentage
@@ -116,6 +118,8 @@ select
             else walks::decimal / plate_appearances
         end as base_on_ball_percentage
 from at_bats_subquery;
+alter view player_stats_view
+add constraint pk_player_stats_view primary key ("Batter", "BatterTeam");
 
 -- Create Pitcher's stats view with:
 -- Total Batters Faced
@@ -169,3 +173,5 @@ with pitcher_stats_subquery as (
 select 
     *
 from pitcher_stats_subquery;
+alter view pitcher_stats_view
+add constraint pk_pitcher_stats_view primary key ("Pitcher", "PitcherTeam");
