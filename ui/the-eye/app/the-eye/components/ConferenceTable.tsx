@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 
-export default function ConferenceTable({name, teams}: {name: string, teams: { team_name: string }[]}) {
+export default function ConferenceTable({name, teams}: {name: string, teams: { TeamName: string, DisplayName: string | null }[]}) {
     const teamURL : string = '/the-eye/team/';
     
     return (
@@ -28,8 +28,8 @@ export default function ConferenceTable({name, teams}: {name: string, teams: { t
                     <TableHead>
                         <TableRow>
                             <TableCell sx={{fontWeight: 600}}>Team</TableCell>
-                            <TableCell align='center' sx={{fontWeight: 600}}>Season Record</TableCell>
-                            <TableCell align='center' sx={{fontWeight: 600}}>Conference Record</TableCell>
+                            <TableCell align='center' sx={{fontWeight: 600}}>Wins</TableCell>
+                            <TableCell align='center' sx={{fontWeight: 600}}>Losses</TableCell>
                         </TableRow>
                     </TableHead>
 
@@ -41,15 +41,15 @@ export default function ConferenceTable({name, teams}: {name: string, teams: { t
                             >
                                 <TableCell component="th" scope="row">
                                     <Link
-                                        href = {teamURL.concat(team.team_name)}
+                                        href = {teamURL.concat(team.TeamName)}
                                         color = 'inherit'
                                         fontWeight={500}
                                     >
-                                        {team.team_name}
+                                        {team.DisplayName ? team.DisplayName : team.TeamName}
                                     </Link>
                                 </TableCell>
-                                <TableCell align='center'>N/A</TableCell>
-                                <TableCell align='center'>N/A</TableCell>
+                                <TableCell align='center'>-</TableCell>
+                                <TableCell align='center'>-</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

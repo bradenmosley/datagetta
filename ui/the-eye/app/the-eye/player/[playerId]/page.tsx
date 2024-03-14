@@ -5,11 +5,17 @@ import ModelsBox from '../components/ModelsBox';
 import { prisma } from '@/app/db';
 
 export default async function PlayerPage({ params }: { params: { playerId: string } }) {
-    // const player = await prisma.player.findUnique({
-    //     where: {
-    //         id: params.playerId,
-    //     }
-    // });
+    const id = params.playerId.split('-');
+    id[1] = id[1].replace(/%20/g, ' ');
+    
+    const player = await prisma.players.findUnique({
+        where: {
+            PlayerName_TeamName: {PlayerName: id[1], TeamName: id[0]},
+        },
+        include: {
+            teams: true,
+        }
+    });
 
     return (
 
@@ -18,12 +24,10 @@ export default async function PlayerPage({ params }: { params: { playerId: strin
             flexDirection: 'column',
             gap: 4,
         }}>
-            {/* <PlayerInfo
-                name = {player?.name as string}
-                team = {player?.team_name as string}
-                bats = 'R'
-                throws = 'L'
-            /> */}
+            <PlayerInfo
+                name = {player?.PlayerName as string}
+                team = {player?.teams.DisplayName ? player?.teams.DisplayName : player?.TeamName as string}
+            />
             <ModelsBox />
         </Box>
         

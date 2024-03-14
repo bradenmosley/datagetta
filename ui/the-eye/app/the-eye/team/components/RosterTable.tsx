@@ -5,36 +5,31 @@ import Link from '@mui/material/Link';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { Theme } from '@/app/theme';
 
-type player = {
-    id : string;
-    name : string;
-    team_name : string;
-    at_bats : number;
-    batting_average : number;
-    on_base_percentage : number;
-    slugging_percentage : number;
-    ops : number;
-    isolated_power : number;
-    k_percentage : number;
-    base_on_balls_percentage : number;
-    in_zone_whiff_percentage : number;
-    chase_percentage : number;
+type playerType = {
+    PlayerName : string;
+    TeamName : string;
+}
+
+type playerTypeWithID = {
+    id : number;
+    PlayerName : string;
+    TeamName : string;
 }
 
 const playerURL : string = '/the-eye/player/';
 
 const columns: GridColDef[] = [
     {
-        field: 'name',
+        field: 'PlayerName',
         headerName: 'Name',
         width: 200,
         renderCell: (params: GridRenderCellParams) =>
             <Link
-                href = {playerURL.concat(params.row.id)}
+                href = {playerURL.concat(params.row.TeamName + '-' + params.row.PlayerName)}
                 color = 'inherit'
                 fontWeight={500}
             >
-                {params.row.name}
+                {params.row.PlayerName}
             </Link>
     },
     {
@@ -99,10 +94,12 @@ const columns: GridColDef[] = [
     },
 ];
 
-export default function RosterTable({players}: {players: player[]}) {
+export default function RosterTable({players}: {players: playerType[]}) {    
+    const playerRows : playerTypeWithID[] = players.map((player, index) => ({ ...player, id: index }));
+    
     return (
         <DataGrid
-            rows = {players}
+            rows = {playerRows}
             columns = {columns}
             autoHeight = {true}
             hideFooter = {true}

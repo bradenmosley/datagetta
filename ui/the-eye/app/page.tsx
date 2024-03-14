@@ -15,6 +15,6 @@ export default function LandingPage() {
   // );
 
   return (
-    <h1>DATA GETTA</h1>
+    <a href='/the-eye'>DATA GETTA</a>
   );
 }

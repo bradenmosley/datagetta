@@ -22,7 +22,7 @@ export default function Tabs() {
                         justifyContent: 'center',
                         ':hover': {bgcolor: Theme.palette.primary.light,}
                     }}
-                    href="/the-eye/team/Auburn"
+                    href="/the-eye/team/AUB_TIG"
                 >
                     <ListItemIcon sx={{minWidth: 'auto'}}>
                         <Image
@@ -49,22 +49,6 @@ export default function Tabs() {
                         <GroupsIcon sx = {{ color: common.white }}/>
                     </ListItemIcon>
                     <ListItemText sx={{'& .MuiTypography-root':{fontWeight: 'bold'}, flexGrow: 0}}>Teams</ListItemText>
-                </ListItemButton>
-            </ListItem>
-
-            <ListItem disablePadding sx={{paddingBottom: 2}}>
-                <ListItemButton
-                    sx={{
-                        gap: 2,
-                        justifyContent: 'center',
-                        ':hover': {bgcolor: Theme.palette.primary.light,}
-                    }}
-                    href="#"
-                >
-                    <ListItemIcon sx={{minWidth: 'auto'}}>
-                        <UploadIcon sx = {{ color: common.white }}/>
-                    </ListItemIcon>
-                    <ListItemText sx={{'& .MuiTypography-root':{fontWeight: 'bold'}, flexGrow: 0}}>Upload</ListItemText>
                 </ListItemButton>
             </ListItem>
 
