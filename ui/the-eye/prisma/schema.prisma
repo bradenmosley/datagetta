@@ -160,9 +160,9 @@ model trackman_metadata {
   UTCDateTime       DateTime?         @db.Date
   AutoHitType       String?           @db.VarChar
   System            String?           @db.VarChar
-  HomeTeamForeignID Int?
-  AwayTeamForeignID Int?
-  GameForeignID     Int?
+  HomeTeamForeignID String?
+  AwayTeamForeignID String?
+  GameForeignID     String?
   PlayID            String?           @db.VarChar
   trackman_batter   trackman_batter?
   trackman_catcher  trackman_catcher?

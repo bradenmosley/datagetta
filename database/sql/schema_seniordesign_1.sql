@@ -43,9 +43,9 @@ CREATE TABLE "trackman_metadata" (
   "UTCDateTime" date,
   "AutoHitType" varchar,
   "System" varchar,
-  "HomeTeamForeignID" int,
-  "AwayTeamForeignID" int,
-  "GameForeignID" int,
+  "HomeTeamForeignID" varchar,
+  "AwayTeamForeignID" varchar,
+  "GameForeignID" varchar,
   "PlayID" varchar
 );
 

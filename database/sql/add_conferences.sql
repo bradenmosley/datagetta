@@ -29,4 +29,5 @@ VALUES
 ('The Ivy League'),
 ('The Summit League'),
 ('West Coast Conference'),
-('Western Athletic Conference');
+('Western Athletic Conference'),
+('NotSet');
