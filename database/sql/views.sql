@@ -69,8 +69,8 @@ with at_bats_subquery as (
             when "PlayResult" = 'HomeRun' then 4
             else 0
             end) as total_bases,
-        (case when at_bats = 0 then null
-            else hits + COUNT(*) filter (where "KorBB" = 'Walk'
+        case when at_bats = 0 then null
+            else (hits + COUNT(*) filter (where "KorBB" = 'Walk'
                                     or "PitchCall" = 'HitByPitch'))::decimal
             / (COUNT(*) filter (where "PlayResult" = 'Error'
                                 or "PlayResult" = 'Out'
@@ -80,8 +80,8 @@ with at_bats_subquery as (
                                 + COUNT(*) filter (where "KorBB" = 'Walk'
                                                     or "PitchCall" = 'HitByPitch')
                                 + COUNT(*) filter (where "PlayResult" = 'Sacrifice' 
-                                                    and "TaggedHitType" = 'FlyBall')
-            ) as on_base_percentage,
+                                                    and "TaggedHitType" = 'FlyBall')) 
+        end as on_base_percentage,
         case when at_bats = 0 then null
             else 
             SUM(case
