@@ -195,8 +195,8 @@ begin
             COUNT(*) filter (where tp."AutoPitchType" = 'Slider') as slider_count,
             COUNT(*) filter (where tp."TaggedPitchType" = 'Fastball' and tp."AutoPitchType" != 'Four-Seam') as twoseam_count,
             COUNT(*) filter (where tp."AutoPitchType" = 'Changeup') as changeup_count
-from trackman_pitcher tp
-where tp."Pitcher" = pitcher_name and tp."PitcherTeam" = pitcher_team and tp."UTCDate" >= start_date and tp."UTCDate" <= end_date
+from trackman_metadata tm, trackman_pitcher tp
+where tp."Pitcher" = pitcher_name and tp."PitcherTeam" = pitcher_team and tp."PitchUID" = tm."PitchUID" and tm."UTCDate" >= start_date and tm."UTCDate" <= end_date
 group by ("Pitcher", "PitcherTeam");
 end;
 $$ language plpgsql;
