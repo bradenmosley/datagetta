@@ -4,33 +4,29 @@ import * as React from 'react';
 import Link from '@mui/material/Link';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { Theme } from '@/app/theme';
-
-type playerType = {
-    PlayerName : string;
-    TeamName : string;
-}
-
-type playerTypeWithID = {
-    id : number;
-    PlayerName : string;
-    TeamName : string;
-}
+import { player_stats } from '../../../types';
 
 const playerURL : string = '/the-eye/player/';
 
 const columns: GridColDef[] = [
     {
-        field: 'PlayerName',
+        field: 'Batter',
         headerName: 'Name',
         width: 200,
         renderCell: (params: GridRenderCellParams) =>
             <Link
-                href = {playerURL.concat(params.row.TeamName + '-' + params.row.PlayerName)}
+                href = {playerURL.concat(params.row.BatterTeam + '~' + params.row.Batter)}
                 color = 'inherit'
                 fontWeight={500}
             >
-                {params.row.PlayerName}
+                {params.row.Batter}
             </Link>
+    },
+    {
+        field: 'hits',
+        headerName: 'H',
+        description: 'Hits',
+        width: 80,
     },
     {
         field: 'at_bats',
@@ -39,10 +35,58 @@ const columns: GridColDef[] = [
         width: 80,
     },
     {
-        field: 'batting_average',
-        headerName: 'BA',
-        description: 'Batting Average',
-        width: 100,
+        field: 'strikes',
+        headerName: 'Strikes',
+        description: 'Strikes',
+        width: 80,
+    },
+    {
+        field: 'walks',
+        headerName: 'BB',
+        description: 'Walks',
+        width: 80,
+    },
+    {
+        field: 'strikeouts',
+        headerName: 'K',
+        description: 'At Bats',
+        width: 80,
+    },
+    {
+        field: 'homeruns',
+        headerName: 'HR',
+        description: 'Homeruns',
+        width: 80,
+    },
+    {
+        field: 'extra_base_hits',
+        headerName: 'XBH',
+        description: 'Extra Base Hits',
+        width: 80,
+    },
+    {
+        field: 'plate_appearances',
+        headerName: 'PA',
+        description: 'Plate Appearances',
+        width: 80,
+    },
+    {
+        field: 'hit_by_pitch',
+        headerName: 'HBP',
+        description: 'Hit by Pitch',
+        width: 80,
+    },
+    {
+        field: 'sacrifice',
+        headerName: 'S',
+        description: 'Sacrifice',
+        width: 80,
+    },
+    {
+        field: 'total_bases',
+        headerName: 'TB',
+        description: 'Total Bases',
+        width: 80,
     },
     {
         field: 'on_base_percentage',
@@ -57,9 +101,21 @@ const columns: GridColDef[] = [
         width: 80,
     },
     {
-        field: 'ops',
+        field: 'games',
+        headerName: 'Games',
+        description: 'Games',
+        width: 80,
+    },
+    {
+        field: 'batting_average',
+        headerName: 'AVG',
+        description: 'Batting Average',
+        width: 80,
+    },
+    {
+        field: 'onbase_plus_slugging',
         headerName: 'OPS',
-        description: 'On-Base Plus Slugging Percentage',
+        description: 'On Base Plus Slugging',
         width: 80,
     },
     {
@@ -80,26 +136,15 @@ const columns: GridColDef[] = [
         description: 'Base on Balls Percentage',
         width: 80,
     },
-    {
-        field: 'in_zone_whiff_percentage',
-        headerName: 'IZW',
-        description: 'In Zone Whiff Percentage',
-        width: 80,
-    },
-    {
-        field: 'chase_percentage',
-        headerName: 'CHASE',
-        description: 'Chase Percentage',
-        width: 80,
-    },
 ];
 
-export default function RosterTable({players}: {players: playerType[]}) {    
-    const playerRows : playerTypeWithID[] = players.map((player, index) => ({ ...player, id: index }));
+export default function RosterTable({players}: {players: player_stats[]}) {    
+    const playerRows : player_stats[] = players.map((player, index) => ({ ...player, id: index }));
     
     return (
         <DataGrid
             rows = {playerRows}
+            //getRowId = {players} //Something to give it an id
             columns = {columns}
             autoHeight = {true}
             hideFooter = {true}
