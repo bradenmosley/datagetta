@@ -199,3 +199,4 @@ from trackman_pitcher
 where "Pitcher" = pitcher_name and "PitcherTeam" = pitcher_team and "UTCDate" >= start_date and "UTCDate" <= end_date
 group by ("Pitcher", "PitcherTeam");
 end;
+$$ language plpgsql;
