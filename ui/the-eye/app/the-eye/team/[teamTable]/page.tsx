@@ -23,7 +23,7 @@ export default async function TeamPage({ params }: { params: { teamTable: string
         case 'batter':
             const batters = await prisma.$queryRaw<player_stats[]>`SELECT * FROM player_stats_view WHERE "BatterTeam" = ${url[0]}`;
             return (
-                <BatterTable players={JSON.parse(JSON.stringify(batters))}/>
+                <BatterTable players={JSON.parse(JSON.stringify(batters, replacer))}/>
             );
 
         case 'pitcher':
