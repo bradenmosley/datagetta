@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import RosterTable from '../components/RosterTable';
 import BatterTable from '../components/BatterTable';
 import { player_stats } from '../../../types';
+import { replacer } from '@/app/bigInt';
 
 export default async function TeamPage({ params }: { params: { teamTable: string } }) {
     // [0]: TeamName | [1]: table type to show
