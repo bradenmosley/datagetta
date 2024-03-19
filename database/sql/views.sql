@@ -184,7 +184,7 @@ from pitcher_stats_subquery;
 
 drop function if exists get_pitch_count;
 create or replace function get_pitch_count(pitcher_name text, pitcher_team text, start_date date, end_date date)
-returns table("Pitcher" text, "PitcherTeam" text, "total_pitches" integer, "curveball_count" integer, "fourseam_count" integer, "sinker_count" integer, "slider_count" integer, "twoseam_count" integer, "changeup_count" integer)
+returns table("Pitcher" varchar, "PitcherTeam" varchar, "total_pitches" bigint, "curveball_count" bigint, "fourseam_count" bigint, "sinker_count" bigint, "slider_count" bigint, "twoseam_count" bigint, "changeup_count" bigint)
 as $$
 begin
     return query
