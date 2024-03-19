@@ -11,6 +11,7 @@ import Link from '@mui/material/Link';
 
 export default function ConferenceTable({name, teams}: {name: string, teams: { TeamName: string, DisplayName: string | null }[]}) {
     const teamURL : string = '/the-eye/team/';
+    const table : string = '~roster'
     
     return (
         <Paper 
@@ -28,8 +29,6 @@ export default function ConferenceTable({name, teams}: {name: string, teams: { T
                     <TableHead>
                         <TableRow>
                             <TableCell sx={{fontWeight: 600}}>Team</TableCell>
-                            <TableCell align='center' sx={{fontWeight: 600}}>Wins</TableCell>
-                            <TableCell align='center' sx={{fontWeight: 600}}>Losses</TableCell>
                         </TableRow>
                     </TableHead>
 
@@ -41,15 +40,13 @@ export default function ConferenceTable({name, teams}: {name: string, teams: { T
                             >
                                 <TableCell component="th" scope="row">
                                     <Link
-                                        href = {teamURL.concat(team.TeamName)}
+                                        href = {teamURL.concat(team.TeamName).concat(table)}
                                         color = 'inherit'
-                                        fontWeight={500}
+                                        fontWeight={600}
                                     >
-                                        {team.DisplayName ? team.DisplayName : team.TeamName}
+                                        {team.DisplayName}
                                     </Link>
                                 </TableCell>
-                                <TableCell align='center'>-</TableCell>
-                                <TableCell align='center'>-</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

@@ -5,8 +5,8 @@ import ModelsBox from '../components/ModelsBox';
 import { prisma } from '@/app/db';
 
 export default async function PlayerPage({ params }: { params: { playerId: string } }) {
-    const id = params.playerId.split('-');
-    id[1] = id[1].replace(/%20/g, ' ');
+    const id = params.playerId.split('~');
+    //id[1] = id[1].replace(/%20/g, ' ');
     
     const player = await prisma.players.findUnique({
         where: {

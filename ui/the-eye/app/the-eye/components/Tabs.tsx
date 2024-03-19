@@ -4,7 +4,6 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import GroupsIcon from '@mui/icons-material/Groups';
-import UploadIcon from '@mui/icons-material/Upload';
 import { common } from "@mui/material/colors";
 import { Theme } from '@/app/theme';
 
