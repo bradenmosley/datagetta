@@ -119,8 +119,6 @@ from at_bats_subquery;
 
 -- Create Pitcher's stats view with:
 -- Total Batters Faced
--- Games Started
--- Innings Pitched
 
 -- Values AU Baseball uses for strike zone
 -- min_plate_side = -0.86
@@ -161,7 +159,18 @@ with pitcher_stats_subquery as (
                         and "PlateLocSide" < -0.86
                         ) as total_num_chases,
         COUNT(*) as pitches,
-        COUNT(distinct "GameUID") as games
+        COUNT(distinct "GameUID") as games,
+        COUNT(*) filter (where "TopBottom" = 'Top'
+                        or "TopBottom" = 'Bottom'
+                        and "Inning" = 1
+                        and "Outs" = 0
+                        and "Balls" = 0
+                        and "Strikes" = 0
+                        ) as games_started,
+        ((COUNT(*) filter (where "KorBB" = 'StrikeOut') + 
+        SUM("OutsOnPlay"::integer)) / 3) + 
+        ((COUNT(*) filter (where "KorBB" = 'StrikeOut') + 
+        SUM("OutsOnPlay"::integer)) % 3) / 10 as total_innings_pitched
     from trackman_metadata tm, trackman_pitcher tp, trackman_batter tb
     where tm."PitchUID" = tp."PitchUID" and tm."PitchUID" = tb."PitchUID"
     group by ("Pitcher", "PitcherTeam")
@@ -169,3 +178,23 @@ with pitcher_stats_subquery as (
 select 
     *
 from pitcher_stats_subquery;
+
+-- Create a function that calculates the pitch_sums_data for a given time period
+
+drop function if exists get_pitch_count;
+create or replace function get_pitch_count(pitcher_name text, pitcher_team text, start_date date, end_date date)
+returns table("Pitcher" text, "PitcherTeam" text, "TotalPitches" integer, "CurveballCount" integer, "FourSeamCount" integer, "SinkerCount" integer, "SliderCount" integer, "TwoSeamCount" integer, "ChangeupCount" integer)
+as $$
+begin
+    select "Pitcher" , "PitcherTeam",
+         COUNT(*) as total_pitches,
+         COUNT(*) filter (where "AutoPitchType" = 'Curveball') as curveball_count,
+         COUNT(*) filter (where "AutoPitchType" = 'Four-Seam') as fourseam_count,
+            COUNT(*) filter (where "AutoPitchType" = 'Sinker') as sinker_count,
+            COUNT(*) filter (where "AutoPitchType" = 'Slider') as slider_count,
+            COUNT(*) filter (where "TaggedPitchType" = 'Fastball' and "AutoPitchType" != 'Four-Seam') as twoseam_count,
+            COUNT(*) filter (where "AutoPitchType" = 'Changeup') as changeup_count
+from trackman_pitcher
+where "Pitcher" = pitcher_name and "PitcherTeam" = pitcher_team and "UTCDate" >= start_date and "UTCDate" <= end_date
+group by ("Pitcher", "PitcherTeam");
+end;
