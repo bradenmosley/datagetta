@@ -1,6 +1,12 @@
-export type playerType = {
-    PlayerName : string;
+export type player = {
+    PlayerName : String;
     TeamName : string;
+}
+
+export type playerId = {
+    PlayerName : String;
+    TeamName : string;
+    id : number;
 }
 
 export type player_stats = {
