@@ -187,16 +187,16 @@ create or replace function get_pitch_count(pitcher_name text, pitcher_team text,
 returns table("Pitcher" text, "PitcherTeam" text, "TotalPitches" integer, "CurveballCount" integer, "FourSeamCount" integer, "SinkerCount" integer, "SliderCount" integer, "TwoSeamCount" integer, "ChangeupCount" integer)
 as $$
 begin
-    select "Pitcher" , "PitcherTeam",
+    select tp."Pitcher" , tp."PitcherTeam",
          COUNT(*) as total_pitches,
-         COUNT(*) filter (where "AutoPitchType" = 'Curveball') as curveball_count,
-         COUNT(*) filter (where "AutoPitchType" = 'Four-Seam') as fourseam_count,
-            COUNT(*) filter (where "AutoPitchType" = 'Sinker') as sinker_count,
-            COUNT(*) filter (where "AutoPitchType" = 'Slider') as slider_count,
-            COUNT(*) filter (where "TaggedPitchType" = 'Fastball' and "AutoPitchType" != 'Four-Seam') as twoseam_count,
-            COUNT(*) filter (where "AutoPitchType" = 'Changeup') as changeup_count
-from trackman_pitcher
-where "Pitcher" = pitcher_name and "PitcherTeam" = pitcher_team and "UTCDate" >= start_date and "UTCDate" <= end_date
+         COUNT(*) filter (where tp."AutoPitchType" = 'Curveball') as curveball_count,
+         COUNT(*) filter (where tp."AutoPitchType" = 'Four-Seam') as fourseam_count,
+            COUNT(*) filter (where tp."AutoPitchType" = 'Sinker') as sinker_count,
+            COUNT(*) filter (where tp."AutoPitchType" = 'Slider') as slider_count,
+            COUNT(*) filter (where tp."TaggedPitchType" = 'Fastball' and tp."AutoPitchType" != 'Four-Seam') as twoseam_count,
+            COUNT(*) filter (where tp."AutoPitchType" = 'Changeup') as changeup_count
+from trackman_pitcher tp
+where tp."Pitcher" = pitcher_name and tp."PitcherTeam" = pitcher_team and tp."UTCDate" >= start_date and tp."UTCDate" <= end_date
 group by ("Pitcher", "PitcherTeam");
 end;
 $$ language plpgsql;
