@@ -184,9 +184,10 @@ from pitcher_stats_subquery;
 
 drop function if exists get_pitch_count;
 create or replace function get_pitch_count(pitcher_name text, pitcher_team text, start_date date, end_date date)
-returns table("Pitcher" text, "PitcherTeam" text, "TotalPitches" integer, "CurveballCount" integer, "FourSeamCount" integer, "SinkerCount" integer, "SliderCount" integer, "TwoSeamCount" integer, "ChangeupCount" integer)
+returns table("Pitcher" text, "PitcherTeam" text, "total_pitches" integer, "curveball_count" integer, "fourseam_count" integer, "sinker_count" integer, "slider_count" integer, "twoseam_count" integer, "changeup_count" integer)
 as $$
 begin
+    return query
     select tp."Pitcher" , tp."PitcherTeam",
          COUNT(*) as total_pitches,
          COUNT(*) filter (where tp."AutoPitchType" = 'Curveball') as curveball_count,
@@ -197,6 +198,6 @@ begin
             COUNT(*) filter (where tp."AutoPitchType" = 'Changeup') as changeup_count
 from trackman_metadata tm, trackman_pitcher tp
 where tp."Pitcher" = pitcher_name and tp."PitcherTeam" = pitcher_team and tp."PitchUID" = tm."PitchUID" and tm."UTCDate" >= start_date and tm."UTCDate" <= end_date
-group by ("Pitcher", "PitcherTeam");
+group by (tp."Pitcher", tp."PitcherTeam");
 end;
 $$ language plpgsql;
