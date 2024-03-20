@@ -6,7 +6,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
+import Link from '@/app/Link';
 
 export default function ConferenceTable({name, teams}: {name: string, teams: { TeamName: string, DisplayName: string | null }[]}) {
     const teamURL : string = '/the-eye/team/';
@@ -38,13 +38,11 @@ export default function ConferenceTable({name, teams}: {name: string, teams: { T
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell component="th" scope="row">
-                                    <Link
+                                    <Link 
                                         href = {teamURL.concat(team.TeamName).concat(table)}
-                                        color = 'inherit'
-                                        fontWeight={600}
-                                    >
-                                        {team.DisplayName}
-                                    </Link>
+                                        name = {team.DisplayName as string}
+                                        fontWeight = {600}
+                                    />
                                 </TableCell>
                             </TableRow>
                         ))}

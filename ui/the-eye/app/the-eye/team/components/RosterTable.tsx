@@ -1,6 +1,6 @@
 'use client'
 
-import Link from '@mui/material/Link';
+import Link from '@/app/Link'
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { Theme } from '@/app/theme';
 
@@ -12,13 +12,11 @@ const columns: GridColDef[] = [
         headerName: 'Name',
         width: 200,
         renderCell: (params: GridRenderCellParams) =>
-            <Link
+            <Link 
                 href = {playerURL.concat(params.row.TeamName + '~' + params.row.PlayerName)}
-                color = 'inherit'
-                fontWeight={500}
-            >
-                {params.row.PlayerName}
-            </Link>
+                name = {params.row.PlayerName}
+                fontWeight = {600}
+            />
     },
 ];
 
