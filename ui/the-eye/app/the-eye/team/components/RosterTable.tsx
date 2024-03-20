@@ -16,6 +16,7 @@ const columns: GridColDef[] = [
                 href = {playerURL.concat(params.row.TeamName + '~' + params.row.PlayerName)}
                 name = {params.row.PlayerName}
                 fontWeight = {600}
+                underline = 'always'
             />
     },
 ];

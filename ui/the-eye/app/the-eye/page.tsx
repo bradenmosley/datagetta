@@ -22,7 +22,9 @@ export default async function ConferencePage() {
                 display: 'flex',
                 flexDirection: 'column',
                 flexGrow: 1,
-                gap: 2
+                gap: 2,
+                paddingX: 8,
+                paddingY: 4
             }}
         >
             <Typography variant='h4' fontWeight={700}>Conferences</Typography>

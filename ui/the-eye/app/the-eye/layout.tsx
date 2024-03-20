@@ -14,8 +14,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 sx={{
                     width: { lg: `calc(100% - ${sidebar_width}px)` },
                     ml: { lg: `${sidebar_width}px` },
-                    paddingX: 8,
-                    paddingY: 4,
+                    // paddingX: 8,
+                    // paddingY: 4,
                 }}
             >
                 <Toolbar></Toolbar>
