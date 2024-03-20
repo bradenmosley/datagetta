@@ -19,8 +19,6 @@ export default async function TeamPage({ params }: { params: { teamName: string,
         
         case 'batter':
             const batters = await prisma.$queryRaw<player_stats[]>`SELECT * FROM player_stats_view WHERE "BatterTeam" = ${params.teamName}`;
-            console.log("**** START ***");
-            console.log(JSON.parse(JSON.stringify(batters, replacer)));
             return (
                 <BatterTable players={JSON.parse(JSON.stringify(batters, replacer))}/>
             );
