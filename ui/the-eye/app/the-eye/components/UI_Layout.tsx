@@ -1,6 +1,6 @@
 'use client'
 
-import * as React from 'react';
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 
 import TopBar from './TopBar';
@@ -9,8 +9,8 @@ import DesktopSideBar from './DesktopSideBar';
 
 export default function UI_Layout({ width }: { width: number }) {
     const drawerWidth = width;
-    const [mobileOpen, setMobileOpen] = React.useState(false);
-    const [isClosing, setIsClosing] = React.useState(false);
+    const [mobileOpen, setMobileOpen] = useState(false);
+    const [isClosing, setIsClosing] = useState(false);
 
     const handleDrawerClose = () => {
         setIsClosing(true);

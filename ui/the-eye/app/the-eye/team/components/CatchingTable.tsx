@@ -1,6 +1,5 @@
 'use client'
 
-import * as React from 'react';
 import Link from '@mui/material/Link';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { Theme } from '@/app/theme';
