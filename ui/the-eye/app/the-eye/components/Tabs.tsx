@@ -21,7 +21,7 @@ export default function Tabs() {
                         justifyContent: 'center',
                         ':hover': {bgcolor: Theme.palette.primary.light,}
                     }}
-                    href="/the-eye/team/AUB_TIG"
+                    href="/the-eye/team/AUB_TIG/roster"
                 >
                     <ListItemIcon sx={{minWidth: 'auto'}}>
                         <Image

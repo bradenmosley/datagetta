@@ -4,7 +4,7 @@ import * as React from 'react';
 import Link from '@mui/material/Link';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { Theme } from '@/app/theme';
-import { player_stats } from '../../../types';
+import { player_stats_forTable } from '../../../types';
 
 const playerURL : string = '/the-eye/player/';
 
@@ -138,7 +138,7 @@ const columns: GridColDef[] = [
     },
 ];
 
-export default function BatterTable({players}: {players: player_stats[]}) {
+export default function BatterTable({players}: {players: player_stats_forTable[]}) {
     return (
         <DataGrid
             rows = {players}

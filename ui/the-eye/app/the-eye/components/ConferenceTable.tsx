@@ -11,7 +11,7 @@ import Link from '@mui/material/Link';
 
 export default function ConferenceTable({name, teams}: {name: string, teams: { TeamName: string, DisplayName: string | null }[]}) {
     const teamURL : string = '/the-eye/team/';
-    const table : string = '~roster'
+    const table : string = '/roster'
     
     return (
         <Paper 
