@@ -1,8 +1,8 @@
 'use client'
 
-import Link from '@/app/Link'
+import Link from '@/app/utils/Link'
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import { Theme } from '@/app/theme';
+import { Theme } from '@/app/utils/theme';
 
 const playerURL : string = '/the-eye/player/';
 

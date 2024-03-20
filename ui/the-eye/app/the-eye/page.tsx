@@ -2,7 +2,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import ConferenceTable from './components/ConferenceTable';
-import { prisma } from '@/app/db';
+import { prisma } from '@/app/utils/db';
 
 export default async function ConferencePage() {
     const conferences = await prisma.conferences.findMany({

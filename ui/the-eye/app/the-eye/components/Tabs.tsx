@@ -5,7 +5,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import GroupsIcon from '@mui/icons-material/Groups';
 import { common } from "@mui/material/colors";
-import { Theme } from '@/app/theme';
+import { Theme } from '@/app/utils/theme';
 
 import Image from 'next/image';
 import logo from './assets/au_logo_onecolor_white.svg'

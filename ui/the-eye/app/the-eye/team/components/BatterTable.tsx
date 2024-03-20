@@ -2,8 +2,8 @@
 
 import Link from '@mui/material/Link';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import { Theme } from '@/app/theme';
-import { player_stats_forTable } from '../../../types';
+import { Theme } from '@/app/utils/theme';
+import { player_stats_forTable } from '../../../utils/types';
 
 const playerURL : string = '/the-eye/player/';
 

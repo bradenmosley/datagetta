@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import TeamInfo from '../components/TeamInfo';
-import Link from "@/app/Link";
-import { prisma } from '@/app/db';
+import Link from "@/app/utils/Link";
+import { prisma } from '@/app/utils/db';
 
 export default async function Layout({ children, params }: { children: React.ReactNode, params: { teamName: string } }) {
     const team = await prisma.teams.findUnique({

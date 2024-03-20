@@ -2,8 +2,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import type { Metadata } from "next";
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
-import { Theme } from './theme';
-import './replacer';
+import { Theme } from './utils/theme';
+import './utils/replacer';
 
 export const metadata: Metadata = {
   title: "Data Getta",

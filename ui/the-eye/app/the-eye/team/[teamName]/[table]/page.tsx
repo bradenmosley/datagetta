@@ -1,9 +1,9 @@
-import { prisma } from '@/app/db';
+import { prisma } from '@/app/utils/db';
 import Box from "@mui/material/Box";
 import RosterTable from '../../components/RosterTable';
 import BatterTable from '../../components/BatterTable';
-import { player_stats } from '../../../../types';
-import { replacer } from '@/app/replacer';
+import { player_stats } from '../../../../utils/types';
+import { replacer } from '@/app/utils/replacer';
 
 export default async function TeamPage({ params }: { params: { teamName: string, table: string } }) {    
     switch (params.table) {

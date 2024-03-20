@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import PlayerInfo from '../components/PlayerInfo';
 import ModelsBox from '../components/ModelsBox';
-import { prisma } from '@/app/db';
+import { prisma } from '@/app/utils/db';
 
 export default async function PlayerPage({ params }: { params: { playerId: string } }) {
     const id = params.playerId.split('~');

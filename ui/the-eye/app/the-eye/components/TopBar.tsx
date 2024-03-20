@@ -3,7 +3,7 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { common } from '@mui/material/colors';
-import { Theme } from '@/app/theme';
+import { Theme } from '@/app/utils/theme';
 
 export default function TopBar({ drawerToggle, width }: { drawerToggle: any, width: number }) {
     return (
