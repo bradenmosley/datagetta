@@ -15,19 +15,16 @@ export default function ConferenceTable({name, teams}: {name: string, teams: { T
     return (
         <Paper 
             elevation={3}
-            sx={{
-                paddingX: 1,
-                paddingY: 1,
-            }}
+            sx={{ paddingX: 1, paddingY: 1, }}
         >
             <Typography variant='h6' fontWeight={700} paddingLeft={1.5}>{name}</Typography>
 
             <TableContainer>
-                <Table sx={{ minWidth: 300 }}>
+                <Table sx={{ minWidth: 250 }}>
 
                     <TableHead>
                         <TableRow>
-                            <TableCell sx={{fontWeight: 600}}>Team</TableCell>
+                            <TableCell sx={{fontWeight: 700}}>Team</TableCell>
                         </TableRow>
                     </TableHead>
 
@@ -42,6 +39,7 @@ export default function ConferenceTable({name, teams}: {name: string, teams: { T
                                         href = {teamURL.concat(team.TeamName).concat(table)}
                                         name = {team.DisplayName as string}
                                         fontWeight = {600}
+                                        underline = 'always'
                                     />
                                 </TableCell>
                             </TableRow>

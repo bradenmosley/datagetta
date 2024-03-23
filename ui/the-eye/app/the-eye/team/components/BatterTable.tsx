@@ -1,6 +1,6 @@
 'use client'
 
-import Link from '@mui/material/Link';
+import Link from '@/app/utils/Link'
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { Theme } from '@/app/utils/theme';
 import { player_stats_forTable } from '../../../utils/types';
@@ -12,14 +12,18 @@ const columns: GridColDef[] = [
         field: 'Batter',
         headerName: 'Name',
         width: 200,
-        renderCell: (params: GridRenderCellParams) =>
-            <Link
-                href = {playerURL.concat(params.row.BatterTeam + '~' + params.row.Batter)}
-                color = 'inherit'
-                fontWeight={500}
-            >
-                {params.row.Batter}
-            </Link>
+        renderCell: (params: GridRenderCellParams) => {
+            const name = params.row.Batter.split(/(?=[A-Z])/);
+
+            return (
+                <Link 
+                    href = {playerURL.concat(params.row.BatterTeam + '/' + params.row.Batter + '/stats')}
+                    name = {name[1] + ' ' + name[0]}
+                    fontWeight = {500}
+                    underline = 'always'
+                />
+            )
+        }
     },
     {
         field: 'hits',
@@ -48,7 +52,7 @@ const columns: GridColDef[] = [
     {
         field: 'strikeouts',
         headerName: 'K',
-        description: 'At Bats',
+        description: 'Strikeouts',
         width: 80,
     },
     {

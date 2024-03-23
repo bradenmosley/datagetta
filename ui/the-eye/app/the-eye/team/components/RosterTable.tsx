@@ -11,13 +11,18 @@ const columns: GridColDef[] = [
         field: 'PlayerName',
         headerName: 'Name',
         width: 200,
-        renderCell: (params: GridRenderCellParams) =>
-            <Link 
-                href = {playerURL.concat(params.row.TeamName + '~' + params.row.PlayerName)}
-                name = {params.row.PlayerName}
-                fontWeight = {600}
-                underline = 'always'
-            />
+        renderCell: (params: GridRenderCellParams) => {
+            const name = params.row.PlayerName.split(/(?=[A-Z])/);
+            
+            return (
+                <Link 
+                    href = {playerURL.concat(params.row.TeamName + '/' + params.row.PlayerName + '/stats')}
+                    name = {name[1] + ' ' + name[0]}
+                    fontWeight = {500}
+                    underline = 'always'
+                />
+            );
+        }
     },
 ];
 

@@ -29,6 +29,13 @@ export default async function TeamPage({ params }: { params: { teamName: string,
                     <h4>Pitcher</h4>
                 </Box>
             );
+
+        case 'catcher':
+            return (
+                <Box>
+                    <h4>Catcher</h4>
+                </Box>
+            );
             
         default:
             return (

@@ -19,19 +19,14 @@ export default async function ConferencePage() {
     return (
         <Box
             sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                flexGrow: 1,
-                gap: 2,
-                paddingX: 8,
-                paddingY: 4
+                paddingX: 8, paddingY: 4
             }}
         >
-            <Typography variant='h4' fontWeight={700}>Conferences</Typography>
+            <Typography variant='h4' fontWeight={700} sx={{paddingBottom: 4}}>Conferences</Typography>
 
             <Grid container spacing={2}>
                 {conferences.map((conf, index) => 
-                    <Grid sm={12} md={6} xl={4} key={index}>
+                    <Grid sm={12} md={6} xl={4} key={index} sx={{width: '100%'}}>
                         <ConferenceTable
                             name = {conf.ConferenceName}
                             teams = {conf.teams}
