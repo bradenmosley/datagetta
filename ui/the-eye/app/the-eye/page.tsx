@@ -10,10 +10,13 @@ export default async function ConferencePage() {
             teams: {
                 select: {
                     TeamName: true,
-                    DisplayName: true
-                }
-            }
-        }
+                    DisplayName: true,
+                },
+                orderBy: {
+                    DisplayName: 'asc',
+                },
+            },
+        },
     });
 
     return (

@@ -12,6 +12,9 @@ export default async function TeamPage({ params }: { params: { teamName: string,
                 where: {
                     TeamName: params.teamName,
                 },
+                orderBy: {
+                    PlayerName: 'asc',
+                },
             });
             return (
                 <RosterTable players = {players}/>

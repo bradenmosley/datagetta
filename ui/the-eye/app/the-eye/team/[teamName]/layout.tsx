@@ -8,9 +8,6 @@ export default async function Layout({ children, params }: { children: React.Rea
         where: {
             TeamName: params.teamName,
         },
-        include: {
-            players: true,
-        },
     });
 
     const currentURL = '/the-eye/team/';
