@@ -25,8 +25,9 @@ returns table("Batter" varchar, "BatterTeam" varchar, "hits" bigint, "at_bats" b
 as $$
 begin
     return query
-    select * from get_all_batter_stats(start_date, end_date)
-    where "Batter" = batter_name and "BatterTeam" = batter_team;
+    select * 
+    from get_all_batter_stats(start_date, end_date) gbs
+    where gbs."Batter" = batter_name and gbs."BatterTeam" = batter_team;
 end;
 $$ language plpgsql;
 
