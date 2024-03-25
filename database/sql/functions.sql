@@ -146,22 +146,22 @@ begin
     select 
             *,
             case
-                when at_bats = 0 then null
-                else hits::decimal / at_bats
+                when abs."at_bats" = 0 then null
+                else abs."hits"::decimal / abs."at_bats"
             end as batting_average,
-            on_base_percentage + slugging_percentage as onbase_plus_slugging,
-            slugging_percentage - case
-                when at_bats = 0 then null
-                else hits::decimal / at_bats
+            abs."on_base_percentage" + abs."slugging_percentage" as onbase_plus_slugging,
+            abs."slugging_percentage" - case
+                when abs."at_bats" = 0 then null
+                else abs."hits"::decimal / abs."at_bats"
             end as isolated_power,
             case
-                when plate_appearances = 0 then null
-                else strikeouts::decimal / plate_appearances
+                when abs."plate_appearances" = 0 then null
+                else abs."strikeouts"::decimal / abs."plate_appearances"
             end as k_percentage,
             case
-                when plate_appearances = 0 then null
-                else walks::decimal / plate_appearances
+                when abs."plate_appearances" = 0 then null
+                else abs."walks"::decimal / abs."plate_appearances"
             end as base_on_ball_percentage
-    from at_bats_subquery;
+    from at_bats_subquery abs;
 end;
 $$ language plpgsql;
