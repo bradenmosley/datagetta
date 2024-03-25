@@ -35,25 +35,11 @@ with at_bats_subquery as (
                                 or "PlayResult" = 'Triple'
                                 or "PlayResult" = 'HomeRun'
                                 ) as at_bats,
-                COUNT(*) filter (where "PitchCall" = 'StrikeSwinging'
-                                or "PitchCall" = 'FoulBallNotFieldable'
-                                or "PitchCall" = 'InPlay'
-                                or "PlateLocHeight" > 3.55
-                                or "PlateLocHeight" < 1.77
-                                or "PlateLocSide" > 0.86
-                                or "PlateLocSide" < -0.86
-                                ) as total_chases,
                 COUNT(*) filter (where "PlateLocHeight" > 3.55
                                 or "PlateLocHeight" < 1.77
                                 or "PlateLocSide" > 0.86
                                 or "PlateLocSide" < -0.86
                                 ) as total_out_of_zone_pitches,
-                COUNT(*) filter (where "PitchCall" = 'StrikeSwinging'
-                                and "PlateLocHeight" < 3.55
-                                and "PlateLocHeight" > 1.77
-                                and "PlateLocSide" < 0.86
-                                and "PlateLocSide" > -0.86
-                                ) as total_num_misses_in_zone,
                 COUNT(*) filter (where "PlateLocHeight" < 3.55
                                 and "PlateLocHeight" > 1.77
                                 and "PlateLocSide" < 0.86
@@ -117,10 +103,22 @@ with at_bats_subquery as (
             end)::decimal / at_bats 
         end as slugging_percentage,
         case when total_out_of_zone_pitches = 0 then null
-            else total_chases::decimal / total_out_of_zone_pitches
+            else COUNT(*) filter (where "PitchCall" = 'StrikeSwinging'
+                                or "PitchCall" = 'FoulBallNotFieldable'
+                                or "PitchCall" = 'InPlay'
+                                or "PlateLocHeight" > 3.55
+                                or "PlateLocHeight" < 1.77
+                                or "PlateLocSide" > 0.86
+                                or "PlateLocSide" < -0.86
+                                )::decimal / total_out_of_zone_pitches
         end as chase_percentage,
         case when total_in_zone_pitches = 0 then null
-            else total_num_misses_in_zone::decimal / total_in_zone_pitches
+            else COUNT(*) filter (where "PitchCall" = 'StrikeSwinging'
+                                and "PlateLocHeight" < 3.55
+                                and "PlateLocHeight" > 1.77
+                                and "PlateLocSide" < 0.86
+                                and "PlateLocSide" > -0.86
+                                )::decimal / total_in_zone_pitches
         end as in_zone_whiff_percentage,
         COUNT(distinct "GameUID") as games
     from  hits_subquery hs, trackman_batter tb, trackman_metadata tm
