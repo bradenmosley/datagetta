@@ -138,13 +138,13 @@ with pitcher_stats_subquery as (
                             or "PlateLocSide" > 0.86
                             or "PlateLocSide" < -0.86
                             ) as total_out_of_zone_pitches,
-        COUNT(*) filter (where "PitchCall" = 'StrikeSwinging' -- Ask if this is all that is needed
+        COUNT(*) filter (where "PitchCall" = 'StrikeSwinging'
                         and "PlateLocHeight" < 3.55
                         and "PlateLocHeight" > 1.77
                         and "PlateLocSide" < 0.86
                         and "PlateLocSide" > -0.86
                         ) as misses_in_zone,
-        COUNT(*) filter (where "PitchCall" = 'StrikeSwinging'   -- Ask if this is all that is needed
+        COUNT(*) filter (where "PitchCall" = 'StrikeSwinging'  
                         or "PitchCall" = 'FoulBallNotFieldable'
                         or "PitchCall" = 'InPlay'
                         and "PlateLocHeight" < 3.55
@@ -152,7 +152,7 @@ with pitcher_stats_subquery as (
                         and "PlateLocSide" < 0.86
                         and "PlateLocSide" > -0.86
                         ) as swings_in_zone,
-        COUNT(*) filter (where "PitchCall" = 'StrikeSwinging'   -- Ask if this is all that is needed
+        COUNT(*) filter (where "PitchCall" = 'StrikeSwinging'  
                         or "PitchCall" = 'FoulBallNotFieldable'
                         and "PlateLocHeight" > 3.55
                         and "PlateLocHeight" < 1.77
@@ -171,7 +171,8 @@ with pitcher_stats_subquery as (
         ((COUNT(*) filter (where "KorBB" = 'StrikeOut') + 
         SUM("OutsOnPlay"::integer)) / 3) + 
         ((COUNT(*) filter (where "KorBB" = 'StrikeOut') + 
-        SUM("OutsOnPlay"::integer)) % 3) / 10 as total_innings_pitched
+        SUM("OutsOnPlay"::integer)) % 3) / 10 as total_innings_pitched,
+        COUNT(distinct ("PAofInning", "Inning", "Batter", "GameUID")) as total_batters_faced
     from trackman_metadata tm, trackman_pitcher tp, trackman_batter tb
     where tm."PitchUID" = tp."PitchUID" and tm."PitchUID" = tb."PitchUID"
     group by ("Pitcher", "PitcherTeam")
@@ -179,25 +180,3 @@ with pitcher_stats_subquery as (
 select 
     *
 from pitcher_stats_subquery;
-
--- Create a function that calculates the pitch_sums_data for a given time period
-
-drop function if exists get_pitch_count;
-create or replace function get_pitch_count(pitcher_name text, pitcher_team text, start_date date, end_date date)
-returns table("Pitcher" varchar, "PitcherTeam" varchar, "total_pitches" bigint, "curveball_count" bigint, "fourseam_count" bigint, "sinker_count" bigint, "slider_count" bigint, "twoseam_count" bigint, "changeup_count" bigint)
-as $$
-begin
-    return query
-    select tp."Pitcher" , tp."PitcherTeam",
-         COUNT(*) as total_pitches,
-         COUNT(*) filter (where tp."AutoPitchType" = 'Curveball') as curveball_count,
-         COUNT(*) filter (where tp."AutoPitchType" = 'Four-Seam') as fourseam_count,
-            COUNT(*) filter (where tp."AutoPitchType" = 'Sinker') as sinker_count,
-            COUNT(*) filter (where tp."AutoPitchType" = 'Slider') as slider_count,
-            COUNT(*) filter (where tp."TaggedPitchType" = 'Fastball' and tp."AutoPitchType" != 'Four-Seam') as twoseam_count,
-            COUNT(*) filter (where tp."AutoPitchType" = 'Changeup') as changeup_count
-from trackman_metadata tm, trackman_pitcher tp
-where tp."Pitcher" = pitcher_name and tp."PitcherTeam" = pitcher_team and tp."PitchUID" = tm."PitchUID" and tm."UTCDate" >= start_date and tm."UTCDate" <= end_date
-group by (tp."Pitcher", tp."PitcherTeam");
-end;
-$$ language plpgsql;
