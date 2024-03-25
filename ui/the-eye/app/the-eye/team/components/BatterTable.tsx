@@ -134,9 +134,9 @@ const columns: GridColDef[] = [
         width: 80,
     },
     {
-        field: 'base_on_balls_percentage',
+        field: 'base_on_ball_percentage',
         headerName: 'BoB',
-        description: 'Base on Balls Percentage',
+        description: 'Base on Ball Percentage',
         width: 80,
     },
 ];
