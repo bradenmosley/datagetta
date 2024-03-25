@@ -45,8 +45,8 @@ with at_bats_subquery as (
                                 and "PlateLocSide" < 0.86
                                 and "PlateLocSide" > -0.86
                                 ) as total_in_zone_pitches
-        from trackman_metadata tm, trackman_batter tb, trackman_pitcher tp
-        where tm."PitchUID" = tb."PitchUID" and tb."PitchUID" = tp."PitchUID" and "UTCDate" >= '2/16/24' and "UTCDate" <= '6/24/24'
+        from trackman_metadata tm, trackman_batter tb, trackman_pitcher tp, seasons s
+        where tm."PitchUID" = tb."PitchUID" and tb."PitchUID" = tp."PitchUID" and s."SeasonTitle" = '2024' and tm."UTCDate" >= s."StartDate" and tm."UTCDate" <= s."EndDate"
         group by ("Batter", "BatterTeam")
     )
     select 
@@ -121,8 +121,8 @@ with at_bats_subquery as (
                                 )::decimal / total_in_zone_pitches
         end as in_zone_whiff_percentage,
         COUNT(distinct "GameUID") as games
-    from  hits_subquery hs, trackman_batter tb, trackman_metadata tm, trackman_pitcher tp
-    where hs."Batter" = tb."Batter" and hs."BatterTeam" = tb."BatterTeam" and tb."PitchUID" = tm."PitchUID" and tm."PitchUID" = tp."PitchUID" and tm."UTCDate" >= '2/16/24' and tm."UTCDate" <= '6/24/24'
+    from  hits_subquery hs, trackman_batter tb, trackman_metadata tm, trackman_pitcher tp, seasons s
+    where hs."Batter" = tb."Batter" and hs."BatterTeam" = tb."BatterTeam" and tb."PitchUID" = tm."PitchUID" and tm."PitchUID" = tp."PitchUID" and s."SeasonTitle" = '2024' and tm."UTCDate" >= s."StartDate" and tm."UTCDate" <= s."EndDate"
     group by (tb."Batter", tb."BatterTeam", hs."hits", hs."at_bats", hs."total_out_of_zone_pitches", hs."total_in_zone_pitches")
 )
 select 
