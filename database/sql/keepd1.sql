@@ -1,1 +1,1 @@
-delete from conferences c where c."Conference" = 'NotSet';
+delete from conferences c where c."ConferenceName" = 'NotSet';
