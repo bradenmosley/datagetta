@@ -19,8 +19,19 @@ group by (tp."Pitcher", tp."PitcherTeam");
 end;
 $$ language plpgsql;
 
-drop function if exists get_player_stats;
-create or replace function get_player_stats(player_name text, player_team text, start_date date, end_date date)
+drop function if exists get_batter_stats;
+create or replace function get_batter_stats(batter_name text, batter_team text, start_date date, end_date date)
+returns table("Batter" varchar, "BatterTeam" varchar, "hits" bigint, "at_bats" bigint, "strikes" bigint, "walks" bigint, "strikeouts" bigint, "homeruns" bigint, "extra_base_hits" bigint, "plate_appearances" bigint, "hit_by_pitch" bigint, "sacrifice" bigint, "total_bases" bigint, "on_base_percentage" decimal, "slugging_percentage" decimal, "chase_percentage" decimal, "in_zone_whiff_percentage" decimal, "games" bigint, "batting_average" decimal, "onbase_plus_slugging" decimal, "isolated_power" decimal, "k_percentage" decimal, "base_on_ball_percentage" decimal)
+as $$
+begin
+    return query
+    select * from get_all_batter_stats(start_date, end_date)
+    where "Batter" = batter_name and "BatterTeam" = batter_team;
+end;
+$$ language plpgsql;
+
+drop function if exists get_all_batter_stats;
+create or replace function get_all_batter_stats(start_date date, end_date date)
 returns table("Batter" varchar, "BatterTeam" varchar, "hits" bigint, "at_bats" bigint, "strikes" bigint, "walks" bigint, "strikeouts" bigint, "homeruns" bigint, "extra_base_hits" bigint, "plate_appearances" bigint, "hit_by_pitch" bigint, "sacrifice" bigint, "total_bases" bigint, "on_base_percentage" decimal, "slugging_percentage" decimal, "chase_percentage" decimal, "in_zone_whiff_percentage" decimal, "games" bigint, "batting_average" decimal, "onbase_plus_slugging" decimal, "isolated_power" decimal, "k_percentage" decimal, "base_on_ball_percentage" decimal)
 as $$
 begin 
@@ -53,7 +64,7 @@ begin
                                     and "PlateLocSide" > -0.86
                                     ) as total_in_zone_pitches
             from trackman_metadata tm, trackman_batter tb, trackman_pitcher tp
-            where tm."PitchUID" = tb."PitchUID" and tb."PitchUID" = tp."PitchUID" and tm."UTCDate" >= start_date and tm."UTCDate" <= end_date and "Batter" = player_name and "BatterTeam" = player_team
+            where tm."PitchUID" = tb."PitchUID" and tb."PitchUID" = tp."PitchUID" and tm."UTCDate" >= start_date and tm."UTCDate" <= end_date
             group by ("Batter", "BatterTeam")
         )
         select 
