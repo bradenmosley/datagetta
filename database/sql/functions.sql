@@ -97,20 +97,20 @@ begin
                 when "PlayResult" = 'HomeRun' then 4
                 else 0
                 end) as total_bases,
-            case when at_bats = 0 then null
-                else (hits + COUNT(*) filter (where "KorBB" = 'Walk'
+            case when hs."at_bats" = 0 then null
+                else (hs."hits" + COUNT(*) filter (where "KorBB" = 'Walk'
                                         or "PitchCall" = 'HitByPitch'))::decimal
                 / (COUNT(*) filter (where "PlayResult" = 'Error'
                                     or "PlayResult" = 'Out'
                                     or "PlayResult" = 'FieldersChoice'
                                     or "KorBB" = 'Strikeout'
-                                    ) + hits 
+                                    ) + hs."hits" 
                                     + COUNT(*) filter (where "KorBB" = 'Walk'
                                                         or "PitchCall" = 'HitByPitch')
                                     + COUNT(*) filter (where "PlayResult" = 'Sacrifice' 
                                                         and "TaggedHitType" = 'FlyBall')) 
             end as on_base_percentage,
-            case when at_bats = 0 then null
+            case when hs."at_bats" = 0 then null
                 else 
                 SUM(case
                 when "PlayResult" = 'Single' then 1
@@ -118,9 +118,9 @@ begin
                 when "PlayResult" = 'Triple' then 3
                 when "PlayResult" = 'HomeRun' then 4
                 else 0
-                end)::decimal / at_bats 
+                end)::decimal / hs."at_bats" 
             end as slugging_percentage,
-            case when total_out_of_zone_pitches = 0 then null
+            case when hs."total_out_of_zone_pitches" = 0 then null
                 else COUNT(*) filter (where "PitchCall" = 'StrikeSwinging'
                                     or "PitchCall" = 'FoulBallNotFieldable'
                                     or "PitchCall" = 'InPlay'
@@ -128,15 +128,15 @@ begin
                                     or "PlateLocHeight" < 1.77
                                     or "PlateLocSide" > 0.86
                                     or "PlateLocSide" < -0.86
-                                    )::decimal / total_out_of_zone_pitches
+                                    )::decimal / hs."total_out_of_zone_pitches"
             end as chase_percentage,
-            case when total_in_zone_pitches = 0 then null
+            case when hs."total_in_zone_pitches" = 0 then null
                 else COUNT(*) filter (where "PitchCall" = 'StrikeSwinging'
                                     and "PlateLocHeight" < 3.55
                                     and "PlateLocHeight" > 1.77
                                     and "PlateLocSide" < 0.86
                                     and "PlateLocSide" > -0.86
-                                    )::decimal / total_in_zone_pitches
+                                    )::decimal / hs."total_in_zone_pitches"
             end as in_zone_whiff_percentage,
             COUNT(distinct "GameUID") as games
         from  hits_subquery hs, trackman_batter tb, trackman_metadata tm, trackman_pitcher tp
