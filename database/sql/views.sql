@@ -1,6 +1,3 @@
--- Create a view that sums the number of pitches thrown by each pitcher
--- and the number of each type of pitch thrown by each pitcher
--- NEED TO REVISE THIS WITH DESIGN GROUP
 drop view if exists pitch_sums_view;
 create or replace view pitch_sums_view as
 select "Pitcher" , "PitcherTeam",
@@ -14,8 +11,11 @@ select "Pitcher" , "PitcherTeam",
 from trackman_pitcher
 group by ("Pitcher", "PitcherTeam");
 
--- In Zone Whiff Percentage
--- Chase Percentage
+-- Values AU Baseball uses for strike zone
+-- min_plate_side = -0.86
+-- max_plate_side = 0.86
+-- max_plate_height = 3.55
+-- min_plate_height = 1.77
 drop view if exists player_stats_view;
 create or replace view player_stats_view as
 with at_bats_subquery as (
@@ -34,7 +34,31 @@ with at_bats_subquery as (
                                 or "PlayResult" = 'Double'
                                 or "PlayResult" = 'Triple'
                                 or "PlayResult" = 'HomeRun'
-                                ) as at_bats
+                                ) as at_bats,
+                COUNT(*) filter (where "PitchCall" = 'StrikeSwinging'
+                                or "PitchCall" = 'FoulBallNotFieldable'
+                                or "PitchCall" = 'InPlay'
+                                or "PlateLocHeight" > 3.55
+                                or "PlateLocHeight" < 1.77
+                                or "PlateLocSide" > 0.86
+                                or "PlateLocSide" < -0.86
+                                ) as total_chases,
+                COUNT(*) filter ("PlateLocHeight" > 3.55
+                                or "PlateLocHeight" < 1.77
+                                or "PlateLocSide" > 0.86
+                                or "PlateLocSide" < -0.86
+                                ) as total_out_of_zone_pitches,
+                COUNT(*) filter (where "PitchCall" = 'StrikeSwinging'
+                                and "PlateLocHeight" < 3.55
+                                and "PlateLocHeight" > 1.77
+                                and "PlateLocSide" < 0.86
+                                and "PlateLocSide" > -0.86
+                                ) as total_num_misses_in_zone
+                COUNT(*) filter (where "PlateLocHeight" < 3.55
+                                and "PlateLocHeight" > 1.77
+                                and "PlateLocSide" < 0.86
+                                and "PlateLocSide" > -0.86
+                                ) as total_in_zone_pitches
         from trackman_metadata tm, trackman_batter tb
         where tm."PitchUID" = tb."PitchUID" 
         group by ("Batter", "BatterTeam")
@@ -92,6 +116,12 @@ with at_bats_subquery as (
             else 0
             end)::decimal / at_bats 
         end as slugging_percentage,
+        case when total_out_of_zone_pitches = 0 then null
+            else total_chases::decimal / total_out_of_zone_pitches
+        end as chase_percentage,
+        case when total_in_zone_pitches = 0 then null
+            else total_num_misses_in_zone::decimal / total_in_zone_pitches
+        end as in_zone_whiff_percentage
         COUNT(distinct "GameUID") as games
     from  hits_subquery hs, trackman_batter tb, trackman_metadata tm
     where hs."Batter" = tb."Batter" and hs."BatterTeam" = tb."BatterTeam" and tb."PitchUID" = tm."PitchUID" 
@@ -117,9 +147,6 @@ select
             else walks::decimal / plate_appearances
         end as base_on_ball_percentage
 from at_bats_subquery;
-
--- Create Pitcher's stats view with:
--- Total Batters Faced
 
 -- Values AU Baseball uses for strike zone
 -- min_plate_side = -0.86
