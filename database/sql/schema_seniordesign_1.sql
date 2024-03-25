@@ -202,18 +202,18 @@ CREATE TABLE "seasons" (
   "EndDate" date
 );
 
-ALTER TABLE "trackman_batter" ADD FOREIGN KEY ("PitchUID") REFERENCES "trackman_metadata" ("PitchUID");
+ALTER TABLE "trackman_batter" ADD FOREIGN KEY ("PitchUID") REFERENCES "trackman_metadata" ("PitchUID") ON DELETE CASCADE;
 
-ALTER TABLE "trackman_catcher" ADD FOREIGN KEY ("PitchUID") REFERENCES "trackman_metadata" ("PitchUID");
+ALTER TABLE "trackman_catcher" ADD FOREIGN KEY ("PitchUID") REFERENCES "trackman_metadata" ("PitchUID") ON DELETE CASCADE;
 
-ALTER TABLE "trackman_pitcher" ADD FOREIGN KEY ("PitchUID") REFERENCES "trackman_metadata" ("PitchUID");
+ALTER TABLE "trackman_pitcher" ADD FOREIGN KEY ("PitchUID") REFERENCES "trackman_metadata" ("PitchUID") ON DELETE CASCADE;
 
-ALTER TABLE "trackman_pitcher" ADD FOREIGN KEY ("Pitcher", "PitcherTeam") REFERENCES "players" ("PlayerName", "TeamName");
+ALTER TABLE "trackman_pitcher" ADD FOREIGN KEY ("Pitcher", "PitcherTeam") REFERENCES "players" ("PlayerName", "TeamName") ON DELETE CASCADE;
 
-ALTER TABLE "trackman_catcher" ADD FOREIGN KEY ("Catcher", "CatcherTeam") REFERENCES "players" ("PlayerName", "TeamName");
+ALTER TABLE "trackman_catcher" ADD FOREIGN KEY ("Catcher", "CatcherTeam") REFERENCES "players" ("PlayerName", "TeamName") ON DELETE CASCADE;
 
-ALTER TABLE "trackman_batter" ADD FOREIGN KEY ("Batter", "BatterTeam") REFERENCES "players" ("PlayerName", "TeamName");
+ALTER TABLE "trackman_batter" ADD FOREIGN KEY ("Batter", "BatterTeam") REFERENCES "players" ("PlayerName", "TeamName") ON DELETE CASCADE;
 
-ALTER TABLE "players" ADD FOREIGN KEY ("TeamName") REFERENCES "teams" ("TeamName");
+ALTER TABLE "players" ADD FOREIGN KEY ("TeamName") REFERENCES "teams" ("TeamName") ON DELETE CASCADE;
 
-ALTER TABLE "teams" ADD FOREIGN KEY ("Conference") REFERENCES "conferences" ("ConferenceName");
+ALTER TABLE "teams" ADD FOREIGN KEY ("Conference") REFERENCES "conferences" ("ConferenceName") ON DELETE CASCADE;
