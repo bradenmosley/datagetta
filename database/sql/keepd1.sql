@@ -1,0 +1,1 @@
+delete from teams t where t."DisplayName" = 'NotSet';
