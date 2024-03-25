@@ -121,8 +121,8 @@ with at_bats_subquery as (
                                 )::decimal / total_in_zone_pitches
         end as in_zone_whiff_percentage,
         COUNT(distinct "GameUID") as games
-    from  hits_subquery hs, trackman_batter tb, trackman_metadata tm
-    where hs."Batter" = tb."Batter" and hs."BatterTeam" = tb."BatterTeam" and tb."PitchUID" = tm."PitchUID" 
+    from  hits_subquery hs, trackman_batter tb, trackman_metadata tm, trackman_pitcher tp
+    where hs."Batter" = tb."Batter" and hs."BatterTeam" = tb."BatterTeam" and tb."PitchUID" = tm."PitchUID" and tm."PitchUID" = tp."PitchUID"
     group by (tb."Batter", tb."BatterTeam", hs."hits", hs."at_bats", hs."total_out_of_zone_pitches", hs."total_in_zone_pitches")
 )
 select 
