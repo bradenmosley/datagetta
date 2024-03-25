@@ -217,3 +217,7 @@ ALTER TABLE "trackman_batter" ADD CONSTRAINT "trackman_batter_Batter_BatterTeam_
 ALTER TABLE "players" ADD CONSTRAINT "players_TeamName_fkey1" FOREIGN KEY ("TeamName") REFERENCES "teams" ("TeamName") ON DELETE CASCADE;
 
 ALTER TABLE "teams" ADD CONSTRAINT "teams_Conference_fkey1" FOREIGN KEY ("Conference") REFERENCES "conferences" ("ConferenceName") ON DELETE CASCADE;
+
+ALTER TABLE "trackman_metadata" ADD CONSTRAINT "trackman_metadata_HomeTeam_fkey1" FOREIGN KEY ("HomeTeam") REFERENCES "teams" ("TeamName") ON DELETE CASCADE;
+
+ALTER TABLE "trackman_metadata" ADD CONSTRAINT "trackman_metadata_AwayTeam_fkey1" FOREIGN KEY ("AwayTeam") REFERENCES "teams" ("TeamName") ON DELETE CASCADE;
