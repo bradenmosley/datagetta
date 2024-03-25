@@ -1,1 +1,1 @@
-delete from teams t where t."DisplayName" = 'NotSet';
+delete from conferences c where c."Conference" = 'NotSet';
