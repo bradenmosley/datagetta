@@ -1,1 +1,1 @@
-delete from conferences c where c."ConferenceName" = 'NotSet';
+delete from teams t2 where t2."TeamName" in (select top 5 t."TeamName" from teams t where t."Conference" = 'NotSet');
