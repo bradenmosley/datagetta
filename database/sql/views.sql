@@ -145,7 +145,7 @@ select
         end as chase_percentage,
         case when total_in_zone_pitches = 0 then null
             else total_num_misses_in_zone::decimal / total_in_zone_pitches
-        end as in_zone_whiff_percentage,
+        end as in_zone_whiff_percentage
 from at_bats_subquery;
 
 -- Values AU Baseball uses for strike zone
