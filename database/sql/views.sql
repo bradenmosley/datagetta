@@ -116,10 +116,16 @@ with at_bats_subquery as (
             else 0
             end)::decimal / at_bats 
         end as slugging_percentage,
+        case when total_out_of_zone_pitches = 0 then null
+            else total_chases::decimal / total_out_of_zone_pitches
+        end as chase_percentage,
+        case when total_in_zone_pitches = 0 then null
+            else total_num_misses_in_zone::decimal / total_in_zone_pitches
+        end as in_zone_whiff_percentage,
         COUNT(distinct "GameUID") as games
     from  hits_subquery hs, trackman_batter tb, trackman_metadata tm
     where hs."Batter" = tb."Batter" and hs."BatterTeam" = tb."BatterTeam" and tb."PitchUID" = tm."PitchUID" 
-    group by (tb."Batter", tb."BatterTeam", hs."hits", hs."at_bats")
+    group by (tb."Batter", tb."BatterTeam", hs."hits", hs."at_bats", hs."total_out_of_zone_pitches", hs."total_in_zone_pitches")
 )
 select 
         *,
@@ -139,13 +145,7 @@ select
         case
             when plate_appearances = 0 then null
             else walks::decimal / plate_appearances
-        end as base_on_ball_percentage,
-        case when total_out_of_zone_pitches = 0 then null
-            else total_chases::decimal / total_out_of_zone_pitches
-        end as chase_percentage,
-        case when total_in_zone_pitches = 0 then null
-            else total_num_misses_in_zone::decimal / total_in_zone_pitches
-        end as in_zone_whiff_percentage
+        end as base_on_ball_percentage
 from at_bats_subquery;
 
 -- Values AU Baseball uses for strike zone
