@@ -6,8 +6,8 @@ services:
         - next.env
       volumes:
         - ./ui/the-eye:/next-app
-      expose:
-        - "3000"
+      ports:
+        - "80:3000"
       networks:
          - datagetta_net
       working_dir: /next-app
@@ -36,15 +36,15 @@ services:
          - datagetta_net
       ports:
         - "5432:5432"
-   caddy:
-    image: caddy:latest
-    container_name: caddy
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile
+  #  caddy:
+  #   image: caddy:latest
+  #   container_name: caddy
+  #   restart: unless-stopped
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./Caddyfile:/etc/caddy/Caddyfile
 
 networks:
    datagetta_net:
