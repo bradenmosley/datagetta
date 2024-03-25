@@ -53,7 +53,7 @@ with at_bats_subquery as (
                                 and "PlateLocHeight" > 1.77
                                 and "PlateLocSide" < 0.86
                                 and "PlateLocSide" > -0.86
-                                ) as total_num_misses_in_zone
+                                ) as total_num_misses_in_zone,
                 COUNT(*) filter (where "PlateLocHeight" < 3.55
                                 and "PlateLocHeight" > 1.77
                                 and "PlateLocSide" < 0.86
