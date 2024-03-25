@@ -121,7 +121,7 @@ with at_bats_subquery as (
         end as chase_percentage,
         case when total_in_zone_pitches = 0 then null
             else total_num_misses_in_zone::decimal / total_in_zone_pitches
-        end as in_zone_whiff_percentage
+        end as in_zone_whiff_percentage,
         COUNT(distinct "GameUID") as games
     from  hits_subquery hs, trackman_batter tb, trackman_metadata tm
     where hs."Batter" = tb."Batter" and hs."BatterTeam" = tb."BatterTeam" and tb."PitchUID" = tm."PitchUID" 
