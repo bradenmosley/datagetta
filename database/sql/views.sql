@@ -59,8 +59,8 @@ with at_bats_subquery as (
                                 and "PlateLocSide" < 0.86
                                 and "PlateLocSide" > -0.86
                                 ) as total_in_zone_pitches
-        from trackman_metadata tm, trackman_batter tb
-        where tm."PitchUID" = tb."PitchUID" 
+        from trackman_metadata tm, trackman_batter tb, trackman_pitcher tp
+        where tm."PitchUID" = tb."PitchUID" and tb."PitchUID" = tp."PitchUID"
         group by ("Batter", "BatterTeam")
     )
     select 
