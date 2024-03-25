@@ -6,6 +6,8 @@ services:
         - next.env
       volumes:
         - ./ui/the-eye:/next-app
+      expose:
+        - "3000"
       networks:
          - datagetta_net
       working_dir: /next-app
