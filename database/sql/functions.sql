@@ -38,7 +38,7 @@ begin
     return query
     with at_bats_subquery as (
         with hits_subquery as (
-            select "Batter", "BatterTeam",
+            select tb."Batter", tb."BatterTeam",
                     COUNT(*) filter (where "PlayResult" = 'Single'
                                     or "PlayResult" = 'Double'
                                     or "PlayResult" = 'Triple'
