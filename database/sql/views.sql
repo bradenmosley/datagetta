@@ -43,7 +43,7 @@ with at_bats_subquery as (
                                 or "PlateLocSide" > 0.86
                                 or "PlateLocSide" < -0.86
                                 ) as total_chases,
-                COUNT(*) filter ("PlateLocHeight" > 3.55
+                COUNT(*) filter (where "PlateLocHeight" > 3.55
                                 or "PlateLocHeight" < 1.77
                                 or "PlateLocSide" > 0.86
                                 or "PlateLocSide" < -0.86
