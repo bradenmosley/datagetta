@@ -1,1 +1,1 @@
-delete from teams t2 where t2."TeamName" in (select top 5 t."TeamName" from teams t where t."Conference" = 'NotSet');
+delete from teams t2 where t2."TeamName" in (select t."TeamName" from teams t where t."Conference" = 'NotSet' limit 5);
