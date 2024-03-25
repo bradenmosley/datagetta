@@ -65,7 +65,7 @@ begin
                                     ) as total_in_zone_pitches
             from trackman_metadata tm, trackman_batter tb, trackman_pitcher tp
             where tm."PitchUID" = tb."PitchUID" and tb."PitchUID" = tp."PitchUID" and tm."UTCDate" >= start_date and tm."UTCDate" <= end_date
-            group by ("Batter", "BatterTeam")
+            group by (tb."Batter", tb."BatterTeam")
         )
         select 
             tb."Batter" as "Batter",
