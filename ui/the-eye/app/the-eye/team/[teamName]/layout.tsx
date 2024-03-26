@@ -4,9 +4,10 @@ import TableTabs from "../components/TableTabs";
 import { prisma } from '@/app/utils/db';
 
 export default async function Layout({ children, params }: { children: React.ReactNode, params: { teamName: string } }) {
+    const decodedTeamName = decodeURIComponent(params.teamName);
     const team = await prisma.teams.findUnique({
         where: {
-            TeamName: params.teamName,
+            TeamName: decodedTeamName,
         },
     });
 
@@ -22,7 +23,7 @@ export default async function Layout({ children, params }: { children: React.Rea
                     marginTop: '4px',
                 }}
             >    
-                <TableTabs team = {params.teamName}/>
+                <TableTabs team = {decodedTeamName}/>
             </Box>
 
             <Box sx={{paddingX: 8, paddingY: 4}}>

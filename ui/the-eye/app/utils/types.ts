@@ -1,4 +1,4 @@
-export type player_stats = {
+export type batter_stats = {
     Batter : String;
     BatterTeam : String;
     hits : BigInt;
@@ -22,7 +22,7 @@ export type player_stats = {
     base_on_ball_percentage: Number;
 }
 
-export type player_stats_forTable = {
+export type batter_stats_forTable = {
     Batter : String;
     BatterTeam : String;
     hits : Number;

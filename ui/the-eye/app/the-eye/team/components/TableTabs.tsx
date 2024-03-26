@@ -2,48 +2,37 @@
 
 import Box from "@mui/material/Box";
 import Link from "@/app/utils/Link";
-import { useParams, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 
 export default function TableTabs ({team}: {team: string}) {
     const currentURL = '/the-eye/team/';
     
-    const params = useParams<{ table: string }>();
     const pathName = usePathname();
 
     const [rosterUnderline, setRosterUnderline] = useState<'none' | 'hover' | 'always' | undefined>('hover');
     const [batterUnderline, setBatterUnderline] = useState<'none' | 'hover' | 'always' | undefined>('hover');
     const [pitcherUnderline, setPitcherUnderline] = useState<'none' | 'hover' | 'always' | undefined>('hover');
-    const [catcherUnderline, setCatcherUnderline] = useState<'none' | 'hover' | 'always' | undefined>('hover');
     
     useEffect(() => {
-        if (params.table === 'roster') {
+        if (pathName.includes('/roster')) {
             setRosterUnderline('always');
             setBatterUnderline('hover');
             setPitcherUnderline('hover');
-            setCatcherUnderline('hover');
-        } else if (params.table === 'batter') {
+        } else if (pathName.includes('/batter')) {
             setRosterUnderline('hover');
             setBatterUnderline('always');
             setPitcherUnderline('hover');
-            setCatcherUnderline('hover');
-        } else if (params.table === 'pitcher') {
+        } else if (pathName.includes('/pitcher')) {
             setRosterUnderline('hover');
             setBatterUnderline('hover');
             setPitcherUnderline('always');
-            setCatcherUnderline('hover');
-        } else if (params.table === 'catcher') {
-            setRosterUnderline('hover');
-            setBatterUnderline('hover');
-            setPitcherUnderline('hover');
-            setCatcherUnderline('always');
         } else {
             setRosterUnderline('hover');
             setBatterUnderline('hover');
             setPitcherUnderline('hover');
-            setCatcherUnderline('hover');
         }
-    }, [params, pathName])
+    }, [pathName])
     
     return (
         <Box
@@ -70,12 +59,6 @@ export default function TableTabs ({team}: {team: string}) {
                 name = 'Pitching'
                 fontWeight = {600}
                 underline = {pitcherUnderline}
-            />
-            <Link 
-                href = {currentURL.concat(team).concat('/catcher')}
-                name = 'Catching'
-                fontWeight = {600}
-                underline = {catcherUnderline}
             />
         </Box>
     )

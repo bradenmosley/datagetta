@@ -5,18 +5,18 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Image from 'next/image';
 import NextLink from 'next/link';
-//import Animation from '../public/lineAnimation.gif'
+import Animation from '../public/lineAnimation.gif'
 import LoginIcon from '@mui/icons-material/Login';
 
 export default function LandingPage() {
     return (
         <Box sx={{position: 'absolute', width: '100vw', height: '100vh', overflow: 'hidden'}}>
-            {/* <Image 
+            <Image 
                 src = {Animation}
                 alt = 'Animation'
                 fill = {true}
                 objectFit = 'cover'
-            /> */}
+            />
 
             <Box
                 sx={{
