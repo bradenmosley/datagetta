@@ -1,7 +1,7 @@
 import { prisma } from '@/app/utils/db';
 import { batter_stats } from "@/app/utils/types";
 import BatterTable from '../../components/BatterTable';
-import { replacer } from '@/app/utils/replacer';
+import { batter_replacer } from '@/app/utils/replacer';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
@@ -16,7 +16,7 @@ export default async function CreateStatsTables(
     return (
         <Box>
             <Typography variant='h6' fontWeight={600}>Batting</Typography>
-            <BatterTable players = {JSON.parse(JSON.stringify(batters, replacer))}/>
+            <BatterTable players = {JSON.parse(JSON.stringify(batters, batter_replacer))}/>
         </Box>
     );
 }

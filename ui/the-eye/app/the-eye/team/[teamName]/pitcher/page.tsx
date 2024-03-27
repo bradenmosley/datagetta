@@ -1,13 +1,14 @@
 import { prisma } from '@/app/utils/db';
-import { replacer } from '@/app/utils/replacer';
-import Box from '@mui/material/Box';
+import { pitcher_replacer } from '@/app/utils/replacer';
+import { pitcher_stats } from '@/app/utils/types';
+import PitcherTable from '../../../components/PitcherTable';
 
 export default async function Page({ params }: { params: { teamName: string } }) {    
     const decodedTeamName = decodeURIComponent(params.teamName);
+    
+    const pitchers = await prisma.$queryRaw<pitcher_stats[]>`SELECT * FROM pitcher_stats_view WHERE "PitcherTeam" = ${decodedTeamName}`;
 
     return (
-        <Box>
-            <h4>Pitcher</h4>
-        </Box>
+        <PitcherTable players={JSON.parse(JSON.stringify(pitchers, pitcher_replacer))}/>
     );
 }
