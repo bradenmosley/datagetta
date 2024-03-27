@@ -186,9 +186,7 @@ with pitcher_stats_subquery as (
                         ) as total_num_chases,
         COUNT(*) as pitches,
         COUNT(distinct "GameUID") as games,
-        COUNT(*) filter (where "TopBottom" = 'Top'
-                        or "TopBottom" = 'Bottom'
-                        and "Inning" = 1
+        COUNT(*) filter (where "Inning" = 1
                         and "Outs" = 0
                         and "Balls" = 0
                         and "Strikes" = 0
