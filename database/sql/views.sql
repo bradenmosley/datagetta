@@ -190,6 +190,7 @@ with pitcher_stats_subquery as (
                         and "Outs" = 0
                         and "Balls" = 0
                         and "Strikes" = 0
+                        and "PitchCall" != 'HitByPitch'
                         ) as games_started,
         ((COUNT(*) filter (where "KorBB" = 'StrikeOut') + 
         SUM("OutsOnPlay"::integer)) / 3) + 
