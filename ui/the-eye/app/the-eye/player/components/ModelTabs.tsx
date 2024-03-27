@@ -2,13 +2,12 @@
 
 import Box from "@mui/material/Box";
 import Link from "@/app/utils/Link";
-import { useParams, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 
 export default function ModelTabs ({team, player}: {team: string, player: string}) {
     const currentURL = '/the-eye/player/';
     
-    const params = useParams<{ model: string }>();
     const pathName = usePathname();
 
     const [statsUnderline, setStatsUnderline] = useState<'none' | 'hover' | 'always' | undefined>('hover');
@@ -17,22 +16,22 @@ export default function ModelTabs ({team, player}: {team: string, player: string
     const [model3Underline, setModel3Underline] = useState<'none' | 'hover' | 'always' | undefined>('hover');
     
     useEffect(() => {
-        if (params.model === 'stats') {
+        if (pathName.includes('/stats')) {
             setStatsUnderline('always');
             setModel1Underline('hover');
             setModel2Underline('hover');
             setModel3Underline('hover');
-        } else if (params.model === 'model1') {
+        } else if (pathName.includes('/model1')) {
             setStatsUnderline('hover');
             setModel1Underline('always');
             setModel2Underline('hover');
             setModel3Underline('hover');
-        } else if (params.model === 'model2') {
+        } else if (pathName.includes('/model2')) {
             setStatsUnderline('hover');
             setModel1Underline('hover');
             setModel2Underline('always');
             setModel3Underline('hover');
-        } else if (params.model === 'model3') {
+        } else if (pathName.includes('/model3')) {
             setStatsUnderline('hover');
             setModel1Underline('hover');
             setModel2Underline('hover');
@@ -43,7 +42,7 @@ export default function ModelTabs ({team, player}: {team: string, player: string
             setModel2Underline('hover');
             setModel3Underline('hover');
         }
-    }, [params, pathName])
+    }, [pathName])
     
     return (
         <Box

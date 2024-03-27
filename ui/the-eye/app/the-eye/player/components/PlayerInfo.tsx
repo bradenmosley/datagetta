@@ -5,7 +5,9 @@ export default function PlayerInfo(
     { name, team }:
     { name: string, team: string }) {
         
+        console.log(name);
         const playerName = name.split(/(?=[A-Z])/);
+        
 
         return (
             <Box>

@@ -7,9 +7,10 @@ export default async function Layout(
     { children, params }:
     { children: React.ReactNode, params: { teamName: string, playerName: string } }
 ) {
+    const decodedTeamName = decodeURIComponent(params.teamName);
     const player = await prisma.players.findUnique({
         where: {
-            PlayerName_TeamName: {PlayerName: params.playerName, TeamName: params.teamName},
+            PlayerName_TeamName: {PlayerName: params.playerName, TeamName: decodedTeamName},
         },
         include: {
             teams: true,
@@ -26,7 +27,7 @@ export default async function Layout(
                     marginTop: '4px',
                 }}
             >    
-                <ModelTabs team = {params.teamName} player = {params.playerName}/>
+                <ModelTabs team = {decodedTeamName} player = {params.playerName}/>
             </Box>
 
             <Box sx={{paddingX: 8, paddingY: 4}}>
